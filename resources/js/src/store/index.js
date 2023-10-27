@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import test from "@/store/modules/test.js";
+import test from "@/store/modules/Modal.js";
 
 const store = createStore({
     modules: {
