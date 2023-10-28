@@ -2,7 +2,7 @@
     <div class="profile-nav">
         <div :class="this.modalProfile ? 'profile-nav__header_active': null" class="profile-nav__header" @click="this.toggleModal('profile')">
             <div class="profile-nav__wrap-img">
-                <img src='/storage/images/1.jpeg' alt="" class="profile-nav__img">
+                <img src='/storage/images/1.png' alt="" class="profile-nav__img">
             </div>
             <i class="bi bi-chevron-down profile-nav__icon"></i>
         </div>
@@ -59,8 +59,6 @@ import {mapActions, mapGetters} from "vuex";
                 transform: rotate(180deg)
             }
         }
-
-
     }
     &__wrap-img{
         width: 35px;
@@ -85,8 +83,8 @@ import {mapActions, mapGetters} from "vuex";
         width: 250px;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         padding: 10px 15px;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
     &__list {
         padding: 0;
