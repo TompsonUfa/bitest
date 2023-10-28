@@ -46,7 +46,7 @@ export default {
         left: 0;
         width: 100%;
         height: var(--header-height);
-        border-bottom: 1px solid #f5f5f5;
+        border-bottom: 1px solid var(--border-color);
         background-color: var(--body-bg);
         .navbar-brand{
             color: var(--main-color);

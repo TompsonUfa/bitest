@@ -66,5 +66,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+    .main {
+        height: 100%;
+        min-height: 100vh;
+        background-color: var(--body-bg);
+    }
 </style>

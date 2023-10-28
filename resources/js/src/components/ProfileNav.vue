@@ -44,7 +44,6 @@ import {mapActions, mapGetters} from "vuex";
 .profile-nav {
     position: relative;
     &__header {
-        height: 54px;
         padding: 10px 15px;
         display: flex;
         justify-content: center;
@@ -79,14 +78,12 @@ import {mapActions, mapGetters} from "vuex";
     }
     &__menu {
         position: absolute;
-        top: var(--header-height);
+        top: calc(var(--header-height) + 10px);
         right: 0;
         width: 250px;
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         padding: 10px 15px;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        background-color: var(--body-bg);
+        border-radius: 10px;
+        background-color: var(--button-bg);
     }
     &__list {
         padding: 0;
@@ -101,7 +98,7 @@ import {mapActions, mapGetters} from "vuex";
         gap: 5px;
         transition: all .3s ease;
         &:hover{
-            background-color: var(--button-bg);
+            background-color: var(--button-bg-second);
         }
     }
 }

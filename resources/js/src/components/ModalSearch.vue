@@ -1,6 +1,8 @@
 <template>
     <div class="modal-search">
-        <div @click="this.toggleModal('search')" class="btn btn-close modal-search__btn-close"></div>
+        <div @click="this.toggleModal('search')" class="modal-search__btn-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
         <div class="modal-search__content">
             <form @submit.prevent="this.submitForm()" class="form-search">
                 <div class="form-search__wrap">
@@ -41,7 +43,7 @@ export default {
         width: 100vw;
         height: 100vh;
         z-index: var(--index-modal);
-        backdrop-filter: blur(3px);
+        backdrop-filter: blur(4px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -56,16 +58,29 @@ export default {
             max-width: 500px;
             padding: 40px;
         }
+        &__btn-close {
+            opacity: 0.5;
+            font-size: 40px;
+            cursor: pointer;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: var(--main-color);
+            transition: all .3s ease;
+            &:hover{
+                opacity: 1;
+            }
+        }
     }
     .form-search{
         width: 100%;
+        color: var(--main-color);
         &__wrap {
             width: 100%;
             display: flex;
             align-items: center;
             padding: 10px;
             gap: 10px;
-            border: 1px solid var(--border-color)
+            border: 2px solid var(--border-color)
         }
         &__input {
             width: 100%;
@@ -73,11 +88,15 @@ export default {
             outline: none;
             font-size: 17px;
             letter-spacing: 1.3px;
+            background-color: inherit;
+            color: inherit;
         }
         &__btn {
+            color: inherit;
             opacity: 0.5;
             font-size: 20px;
             cursor: pointer;
+            transition: all .3s ease;
             &:hover{
                 opacity: 1;
             }

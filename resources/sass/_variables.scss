@@ -15,17 +15,20 @@ $line-height-base: 1.6;
 
     /*bg*/
     --button-bg: #f5f5f5;
+    --button-bg-second: #dfe3e9;
     --body-bg: #fff;
 
     /*colors*/
     --main-color: #000;
-    --border-color: rgba(0, 0, 0, 0.3);
+    --border-color: #F5F5F5;
 }
 
 
 :root .dark {
     /*bg*/
     --button-bg: #2B2E33;
+    --button-bg-second: #4f5864;
+
     --body-bg: #171d23;
 
     /*colors*/
