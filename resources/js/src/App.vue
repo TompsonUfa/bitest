@@ -1,5 +1,5 @@
 <template>
-    <app-header/>
+    <app-header :dark="this.dark" @change-theme="changeTheme"/>
     <main class="main">
         <div class="container">
            <router-view></router-view>
@@ -19,11 +19,48 @@ export default {
     },
     data(){
         return {
-
+            dark: false,
         }
     },
     computed:{
         ...mapGetters(['modalSearch']),
+    },
+    mounted() {
+        const initUserTheme = this.getTheme() || this.getMediaPreference();
+        this.dark = initUserTheme;
+        this.setTheme(initUserTheme);
+    },
+    methods: {
+        setTheme(theme) {
+            localStorage.setItem("theme-mode", theme);
+            if (theme === "dark") {
+                this.dark = true;
+                document.body.classList.add("dark");
+            } else {
+                this.dark = false;
+                document.body.classList.remove("dark");
+            }
+        },
+        changeTheme() {
+            if (this.dark === true) {
+                this.setTheme("light");
+            } else {
+                this.setTheme("dark");
+            }
+        },
+        getMediaPreference() {
+            const hasDarkPreference = window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            ).matches;
+            if (hasDarkPreference) {
+                return "dark";
+            } else {
+                return "light";
+            }
+        },
+        getTheme() {
+            return localStorage.getItem("theme-mode");
+        },
     }
 }
 </script>
