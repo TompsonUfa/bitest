@@ -2,7 +2,7 @@
     <div class="profile-nav">
         <div :class="this.modalProfile ? 'profile-nav__header_active': null" class="profile-nav__header" @click="this.toggleModal('profile')">
             <div class="profile-nav__wrap-img">
-                <img src='/storage/images/1.png' alt="" class="profile-nav__img">
+                <img src='/storage/images/1.jpeg' alt="" class="profile-nav__img">
             </div>
             <i class="bi bi-chevron-down profile-nav__icon"></i>
         </div>

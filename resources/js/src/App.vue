@@ -5,7 +5,7 @@
            <router-view></router-view>
         </div>
     </main>
-    <modal-search v-if="this.modalSearch"></modal-search>
+    <modal-search v-if="modalSearch"></modal-search>
 </template>
 
 <script>
@@ -69,6 +69,7 @@ export default {
     .main {
         height: 100%;
         min-height: 100vh;
+        padding-top: 55px;
         background-color: var(--body-bg);
     }
 </style>

@@ -48,6 +48,7 @@ export default {
         height: var(--header-height);
         border-bottom: 1px solid var(--border-color);
         background-color: var(--body-bg);
+        z-index: var(--index-header);
         .navbar-brand{
             color: var(--main-color);
             text-transform: uppercase;
