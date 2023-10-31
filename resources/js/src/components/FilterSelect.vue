@@ -30,29 +30,32 @@ export default {
     .select{
         position: relative;
         cursor: pointer;
-        height: 35px;
-        border: 1px solid var(--border-color);
         border-radius: 5px;
         color: var(--main-color);
-        background-color: var(--button-bg);
+        height: 38px;
         &__header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px 10px;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--button-bg-second);
+            background-color: var(--button-bg);
+            font-size: 15px;
         }
         &__menu {
             position: absolute;
-            top: 40px;
+            top: 45px;
             left: 0;
             z-index: 3;
             width: 100%;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--button-bg-second);
             border-radius: 5px;
             background-color: var(--button-bg);
+            font-size: 15px;
         }
         &__item {
-            padding: 10px;
+            padding: 10px 15px;
             &:hover{
                 background-color: var(--button-bg-second);
             }

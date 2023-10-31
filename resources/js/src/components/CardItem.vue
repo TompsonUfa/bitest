@@ -1,7 +1,7 @@
 <template>
     <article class="card">
         <div class="card__wrap-picture">
-            <img class="card__picture" src="/storage/images/1.jpeg" alt="">
+            <img class="card__picture" src="/storage/images/1.webp" alt="">
         </div>
         <div class="card__content">
             <a href="/categories" class="card__category">Физика</a>
@@ -12,7 +12,7 @@
                 </span> -
                 <span class="card__date">27, Октября</span>
             </div>
-            <a href="" class="btn btn-primary">Перейти</a>
+            <a href="" class="btn card__btn">Перейти</a>
         </div>
     </article>
 </template>
@@ -30,7 +30,7 @@ export default {
         border: none;
         padding: 20px;
         height: 100%;
-        min-height: 250px;
+        min-height: 350px;
         overflow: hidden;
         background-color: transparent;
         &:hover &__picture{
@@ -55,6 +55,7 @@ export default {
             z-index: 2;
             width: 100%;
             padding: 22px 20px;
+            margin-top: auto;
         }
         &__category{
             font-size: 11px;
@@ -85,6 +86,14 @@ export default {
                 text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
                 color: #fff;
                 text-decoration: none;
+            }
+        }
+        &__btn{
+            color: #fff;
+            background-color: var(--brand-color);
+            transition: all 0.2s ease;
+            &:hover {
+                background-color: #000;
             }
         }
     }

@@ -1,12 +1,12 @@
 <template>
     <div class="profile-nav">
-        <div :class="this.modalProfile ? 'profile-nav__header_active': null" class="profile-nav__header" @click="this.toggleModal('profile')">
+        <div :class="modalProfile ? 'profile-nav__header_active': null" class="profile-nav__header" @click="toggleModal('profile')">
             <div class="profile-nav__wrap-img">
-                <img src='/storage/images/1.jpeg' alt="" class="profile-nav__img">
+                <img src='/storage/images/1.png' alt="" class="profile-nav__img">
             </div>
             <i class="bi bi-chevron-down profile-nav__icon"></i>
         </div>
-        <div v-if="this.modalProfile" class="profile-nav__menu">
+        <div v-if="modalProfile" class="profile-nav__menu">
             <ul class="profile-nav__list">
                 <li class="profile-nav__item">
                     <router-link class="profile-nav__link" to="/profile">
@@ -80,10 +80,11 @@ import {mapActions, mapGetters} from "vuex";
         position: absolute;
         top: calc(var(--header-height) + 10px);
         right: 0;
-        width: 250px;
-        padding: 10px 15px;
+        width: 200px;
         border-radius: 10px;
         background-color: var(--button-bg);
+        border: 1px solid var(--button-bg-second);
+        overflow: hidden;
     }
     &__list {
         padding: 0;
@@ -93,10 +94,11 @@ import {mapActions, mapGetters} from "vuex";
     &__link{
         color: var(--main-color);
         text-decoration: none;
-        padding: 10px;
+        padding: 15px 20px;
         display: flex;
         gap: 5px;
         transition: all .3s ease;
+        font-size: 15px;
         &:hover{
             background-color: var(--button-bg-second);
         }
