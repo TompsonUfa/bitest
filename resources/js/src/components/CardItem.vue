@@ -1,7 +1,7 @@
 <template>
     <article class="card">
         <div class="card__wrap-picture">
-            <img class="card__picture" src="/storage/images/1.webp" alt="">
+            <img class="card__picture" src="/storage/images/1.jpeg" alt="">
         </div>
         <div class="card__content">
             <a href="/categories" class="card__category">Физика</a>
@@ -12,7 +12,7 @@
                 </span> -
                 <span class="card__date">27, Октября</span>
             </div>
-            <a href="" class="btn card__btn">Перейти</a>
+            <router-link class="btn card__btn" to="/tests/1">Перейти</router-link>
         </div>
     </article>
 </template>

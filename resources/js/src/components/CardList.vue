@@ -3,15 +3,7 @@
         <div class="col-12 col-lg-6">
             <card-item class="cards__item"></card-item>
         </div>
-        <div class="col-12 col-lg-6">
-            <card-item class="cards__item"></card-item>
-        </div>
-        <div class="col-12 col-lg-6">
-            <card-item class="cards__item"></card-item>
-        </div>
-        <div class="col-12 col-lg-6">
-            <card-item class="cards__item"></card-item>
-        </div>
+
     </div>
 </template>
 

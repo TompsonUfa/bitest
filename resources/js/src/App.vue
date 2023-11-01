@@ -6,20 +6,26 @@
         </div>
     </main>
     <modal-search v-if="modalSearch"></modal-search>
+    <app-loader v-if="this.loader"></app-loader>
 </template>
 
 <script>
 import AppHeader from "./components/AppHeader.vue";
 import ModalSearch from "@/components/ModalSearch.vue";
+import AppLoader from "@/components/AppLoader.vue";
+
 import {mapGetters} from "vuex";
 export default {
     components: {
         AppHeader,
-        ModalSearch
+        ModalSearch,
+        AppLoader
+
     },
     data(){
         return {
             dark: false,
+            loader: false,
         }
     },
     computed:{
@@ -61,6 +67,15 @@ export default {
         getTheme() {
             return localStorage.getItem("theme-mode");
         },
+    },
+    created() {
+        this.$router.beforeResolve((to, from, next) => {
+            this.loader = true;
+            next();
+        })
+        this.$router.afterEach((to, from) => {
+            setTimeout(() =>  this.loader = false, 1000);
+        })
     }
 }
 </script>
