@@ -10,13 +10,16 @@ const routes = [
     },
     {
         path: '/tests/:id',
+        redirect: { name: 'preview' },
         component: Test,
         name: 'test',
         meta: { breadcrumb: 'Тест' },
         children: [
             {
                 path: '',
-                component: () => import('@/components/PreviewTest.vue'),
+                component: PreviewTest,
+                name: 'preview',
+                meta: { breadcrumb: 'Просмотр' },
             },
             {
                 path: 'pass',

@@ -28,7 +28,7 @@ export default {
                 if (breadcrumbText) {
                     return {
                         text: breadcrumbText,
-                        to: route.path,
+                        to: route,
                     };
                 } else {
                     return null;

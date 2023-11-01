@@ -74,7 +74,7 @@ export default {
             next();
         })
         this.$router.afterEach((to, from) => {
-            setTimeout(() =>  this.loader = false, 1000);
+            setTimeout(() =>  this.loader = false, 500);
         })
     }
 }

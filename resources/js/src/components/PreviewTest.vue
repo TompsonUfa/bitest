@@ -1,6 +1,6 @@
 <template>
-    <div class="preview align-items-center">
-        <div class="row">
+    <div class="preview">
+        <div class="row align-items-center">
             <div class="col-6">
                 <h2 class="preview__title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h2>
                 <p class="preview__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequatur cum, cupiditate eos id ipsa iste maiores molestias nemo nihil officia pariatur quaerat qui repellat rerum vel vero voluptatem. Facilis?</p>
@@ -12,7 +12,7 @@
             </div>
             <div class="col-6">
                 <div class="preview__wrap">
-                    <img class="preview__img" src="/storage/images/1.jpeg" alt="">
+                    <img class="preview__img" src="/storage/images/1.webp" alt="">
                 </div>
             </div>
         </div>

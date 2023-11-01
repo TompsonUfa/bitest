@@ -1,7 +1,7 @@
 <template>
     <article class="card">
         <div class="card__wrap-picture">
-            <img class="card__picture" src="/storage/images/1.jpeg" alt="">
+            <img class="card__picture" src="/storage/images/1.webp" alt="">
         </div>
         <div class="card__content">
             <a href="/categories" class="card__category">Физика</a>
