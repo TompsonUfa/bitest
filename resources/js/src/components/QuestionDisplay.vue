@@ -1,17 +1,18 @@
 <template>
     <div class="test__question question">
-        <h4 class="question__title mb-3">{{ selectedQuestion.name }}</h4>
-        <div class="question__options options">
-            <div v-if="!selectedQuestion.open" v-for="option in selectedQuestion.options"
-                 :key="option.id" class="options__item">
-                <div class="form-check">
-                    <input v-model="this.answer.selected"  name="option"
-                           :type="selectedQuestion.several ? 'checkbox' : 'radio'"
-                           :value="option.id" class="form-check-input options__input"
-                           :id="'option-' + option.id">
-                    <label class="form-check-label" :for="'option-' + option.id">
-                        {{option.name}}
-                    </label>
+        <div class="row">
+            <div class="col-12">
+                <h4 class="question__title mb-3">{{ selectedQuestion.name }}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div :class="selectedQuestion.img ? 'col-6' : 'col-12'">
+                <p class="question__desc">{{!selectedQuestion.open ? 'Варианты ответов:' : 'Введите ваш ответ:'}}</p>
+                <question-options class="question__options"></question-options>
+            </div>
+            <div class="col-6" v-if="selectedQuestion.img">
+                <div class="question__wrap-img">
+                    <img class="question__img" :src="selectedQuestion.img" :alt="selectedQuestion.name">
                 </div>
             </div>
         </div>
@@ -19,46 +20,52 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+    import QuestionOptions from "@/components/QuestionOptions.vue";
     export default {
         name: 'QuestionDisplay',
-        props: {
-            selectedQuestion: {
-                type: Object,
-                required: true,
-            },
+        components: {
+            QuestionOptions,
         },
-        data(){
-            return {
-                answer: {
-                    questionId: '',
-                    open: '',
-                    selected: this.selectedQuestion.several ? [] : '',
-                },
-            }
-        },
-        watch: {
-            selectedQuestion(question) {
-                this.answer.questionId = question.id;
-                this.answer.open = '';
-                this.answer.selected = [];
-            },
-        },
-        methods: {
-          ...mapActions(['selectAnswer']),
+        computed: {
+           ...mapGetters(['selectedQuestion'])
         },
     }
 </script>
 
 <style scoped lang="scss">
-.options{
-    &__item{
-        font-size: 17px;
+.question{
+    &__title, &__options, &__desc {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    &__title {
+        line-height: 1.2;
+
+    }
+    &__desc{
+        color: var(--main-color);
         margin-bottom: 10px;
     }
-    &__input:checked {
-        background-color: var(--brand-color);
-        border-color: var(--brand-color);
+    &__wrap-img{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 15px;
+    }
+    &__img{
+        width: inherit;
+        height: inherit;
+        object-fit: cover;
+        transition: all 0.3s ease;
+
+        &:hover{
+            transform: scale(1.2);
+        }
     }
 }
 </style>

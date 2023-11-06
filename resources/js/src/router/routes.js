@@ -25,7 +25,7 @@ const routes = [
                 path: 'pass',
                 name: 'pass',
                 component: PassTest,
-                meta: { breadcrumb: 'Сдача' },
+                meta: { breadcrumb: 'Выполнение теста' },
             }
         ]
     },

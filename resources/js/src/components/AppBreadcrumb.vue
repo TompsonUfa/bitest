@@ -22,7 +22,6 @@ export default {
     },
     computed: {
         breadcrumbs() {
-            console.log(this.$route.matched)
             return this.$route.matched.map(route => {
                 const breadcrumbText = route.meta.breadcrumb;
                 if (breadcrumbText) {
@@ -42,7 +41,7 @@ export default {
 <style lang="scss">
     .breadcrumbs{
         background-color: var(--body-bg-secondary);
-        padding: 15px 30px;
+        padding: 15px 40px;
         border-radius: 15px;
         display: flex;
         gap: 5px;

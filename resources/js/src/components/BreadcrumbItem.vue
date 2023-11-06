@@ -12,9 +12,6 @@
             item: Object,
             last: Boolean
         },
-        created() {
-    console.log(this.item)
-        }
     }
 </script>
 

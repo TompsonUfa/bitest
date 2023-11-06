@@ -12,6 +12,7 @@
 
 <script>
 import AppBreadcrumbs from "@/components/AppBreadcrumb.vue";
+import {mapGetters} from "vuex";
 export default {
     name: "Test",
     components: {

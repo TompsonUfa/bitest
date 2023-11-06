@@ -2,11 +2,11 @@
     <div class="preview">
         <div class="row align-items-center">
             <div class="col-6">
-                <h2 class="preview__title">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h2>
-                <p class="preview__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequatur cum, cupiditate eos id ipsa iste maiores molestias nemo nihil officia pariatur quaerat qui repellat rerum vel vero voluptatem. Facilis?</p>
+                <h2 class="preview__title">{{this.test.title}}</h2>
+                <p class="preview__desc">{{this.test.desc}}</p>
                 <div class="preview__meta">
-                    <div class="preview__attempts">Количество попыток: 1 / 2</div>
-                    <div class="preview__time">Время на тест: 60 минут</div>
+                    <div class="preview__attempts">Количество попыток: 1 / {{this.test.attempts}}</div>
+                    <div class="preview__time">Время на тест: {{ this.test.time }} минут</div>
                 </div>
                 <router-link :to="{ name: 'pass', params: { id: $route.params.id } }" class="preview__btn btn btn-lg">Начать</router-link>
             </div>
@@ -20,14 +20,19 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex";
+
     export default {
         name: 'PreviewTest',
+        computed:{
+            ...mapGetters(['test'])
+        },
     }
 </script>
 
 <style scoped lang="scss">
     .preview {
-    padding: 30px;
+    padding: 40px;
     border-radius: 15px;
     background-color: var(--body-bg-secondary);
     &__title{

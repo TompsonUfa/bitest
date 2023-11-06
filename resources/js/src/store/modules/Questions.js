@@ -24,20 +24,22 @@ export default {
             },
             {
                 id: 2,
-                name: 'Какое озеро считается самым глубоким в мире?' ,
+                name: 'Кто изображен на картинке?' ,
                 several: true,
                 open: false,
+                img: '/storage/images/test.jpeg',
                 options: [
-                    {id: 1, name: 'Байкал'},
-                    {id: 2, name: 'Онтарио'},
-                    {id: 3, name: 'Каспийское море'},
+                    {id: 1, name: 'Капитан Прайс'},
+                    {id: 2, name: 'Саймон Райли'},
+                    {id: 3, name: 'Шепард предатель'},
                 ]
             },
             {
                 id: 3,
-                name: 'Какая страна находится на северном полюсе?' ,
+                name: 'Кто изображен на картинке?',
                 several: false,
                 open: true,
+                img: '/storage/images/test.jpeg',
             },
         ],
         select: {},
