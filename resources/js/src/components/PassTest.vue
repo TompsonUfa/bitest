@@ -8,10 +8,10 @@
                 <ui-timer></ui-timer>
             </div>
             <div class="col-2 text-end">
-                <ui-button class="">Завершить</ui-button>
+                <ui-button @click="this.toggleModal()">Завершить</ui-button>
             </div>
         </div>
-        <div class="row" v-if="this.selectedQuestion">
+        <div class="row" v-if="selectedQuestion">
             <div class="col-12 mb-3">
                 <question-display></question-display>
            </div>
@@ -21,6 +21,7 @@
                 <ui-button @click="this.nextQuestion" class="test__btn next-question">Следующий</ui-button>
             </div>
         </div>
+        <modal-end-test @close-modal="this.toggleModal()" v-if="this.modalShow"></modal-end-test>
     </div>
 </template>
 
@@ -29,6 +30,7 @@ import QuestionSwitcher from "@/components/QuestionSwitcher.vue";
 import QuestionDisplay from "@/components/QuestionDisplay.vue";
 import UiButton from "@/components/UI/UiButton.vue";
 import UiTimer from "@/components/UiTimer.vue";
+import ModalEndTest from "@/components/ModalEndTest.vue";
 import {mapActions, mapGetters} from "vuex";
     export default {
         name: 'PassTest',
@@ -36,7 +38,8 @@ import {mapActions, mapGetters} from "vuex";
             QuestionSwitcher,
             QuestionDisplay,
             UiButton,
-            UiTimer
+            UiTimer,
+            ModalEndTest
         },
         computed:{
             ...mapGetters(['test','questions', 'selectedQuestion', "answers"]),
@@ -80,8 +83,16 @@ import {mapActions, mapGetters} from "vuex";
                         break;
                     }
                 }
-            }
+            },
+            toggleModal(){
+                this.modalShow = !this.modalShow;
+            },
         },
+        data(){
+            return{
+                modalShow: false,
+            }
+        }
     }
 </script>
 
@@ -97,5 +108,4 @@ import {mapActions, mapGetters} from "vuex";
             margin-bottom: 20px;
         }
     }
-
 </style>

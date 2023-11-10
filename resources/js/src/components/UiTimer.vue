@@ -12,7 +12,7 @@
                 timeLimitInMinutes: 1, // Установите лимит времени в минутах
                 totalTimeInSeconds: 0,
                 timerInterval: null,
-                timeLeft: "60:00",
+                timeLeft: "01:00",
             }
         },
         methods: {

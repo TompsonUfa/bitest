@@ -27,7 +27,7 @@ export default {
                 name: 'Кто изображен на картинке?' ,
                 several: true,
                 open: false,
-                img: '/storage/images/test.jpeg',
+                img: '/storage/images/1.jpeg',
                 options: [
                     {id: 1, name: 'Капитан Прайс'},
                     {id: 2, name: 'Саймон Райли'},
@@ -39,7 +39,7 @@ export default {
                 name: 'Кто изображен на картинке?',
                 several: false,
                 open: true,
-                img: '/storage/images/test.jpeg',
+                img: '/storage/images/2.jpeg',
             },
         ],
         select: {},
