@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Services\ApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use mysql_xdevapi\Exception;
 
 class LoginController extends Controller
 {
@@ -49,7 +48,8 @@ class LoginController extends Controller
            $user->save();
         }
 
-        Auth::login($user);
+       Auth::login($user);
+
     }
 
 }

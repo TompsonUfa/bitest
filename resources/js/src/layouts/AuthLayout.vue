@@ -8,7 +8,7 @@
                 <h3 class="auth__title">Авторизация</h3>
                 <form method="post">
                     <div class="input-wrap">
-                        <input v-model="this.login" type="text" name="login" id="login" class="auth__input" autocomplete="off"
+                        <input v-model="this.form.login" type="text" name="login" id="login" class="auth__input" autocomplete="off"
                                placeholder="Login" required />
                         <label class="auth__label" for="login">Логин:</label>
                         <div class="auth__icon">
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="input-wrap">
-                        <input v-model="this.password" type="password" name="password" id="password" class="auth__input" autocomplete="off"
+                        <input v-model="this.form.password" type="password" name="password" id="password" class="auth__input" autocomplete="off"
                                placeholder="Пароль" required />
                         <label class="auth__label" for="password">Пароль:</label>
                         <div class="auth__icon">
@@ -43,7 +43,7 @@
                     </div>
                     <ul v-if="this.errors" class="auth__errors">
                         <li v-for="error in this.errors">
-                            {{error}}
+                            {{ error.join(', ')}}
                         </li>
                     </ul>
                     <ui-button @click="this.submitForm()" :class="this.errors ? '' : 'mt-4'">Войти</ui-button>
@@ -56,28 +56,32 @@
 <script>
     import UiButton from "@/components/UI/UiButton.vue";
     import axios from "axios";
+    import {mapActions} from "vuex";
     export default {
         name: "AuthLayout",
         components: {UiButton},
         data(){
             return {
-                login: '',
-                password: '',
+                form: {
+                    login: '',
+                    password: '',
+                },
                 errors: null,
             }
         },
         methods: {
+            ...mapActions(['login']),
             submitForm(){
                 this.errors = null;
                 axios.get('/sanctum/csrf-cookie').then(response => {
-                    axios.post('/login', {login: this.login, password: this.password})
+                    axios.post('/login', this.form)
                         .then(res => {
-                           localStorage.setItem('x_xsrf_token',res.config.headers['X-XSRF-TOKEN']);
-                           this.$router.push({name: 'home'})
+                            this.login();
                         })
                         .catch(err => {
-                            this.errors = err.response.data.errors;
-                            console.log(this.errors)
+                            if(err.response.status === 403 || err.response.status === 422){
+                                this.errors = err.response.data.errors;
+                            }
                         })
                 });
             }

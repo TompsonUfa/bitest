@@ -27,13 +27,12 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['modalSearch']),
+        ...mapGetters(['modalSearch', 'user']),
     },
     mounted() {
         const initUserTheme = this.getTheme() || this.getMediaPreference();
         this.dark = initUserTheme;
         this.setTheme(initUserTheme);
-        this.getUsers();
     },
     methods: {
         setTheme(theme) {
@@ -66,15 +65,6 @@ export default {
         getTheme() {
             return localStorage.getItem("theme-mode");
         },
-        getUsers(){
-            axios.get('/api/user')
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        }
     },
 }
 </script>

@@ -10,16 +10,18 @@ const routes = [
         path: '/login',
         component: AuthLayout,
         name: 'login',
+        meta: { breadcrumb: 'Авторизация', middleware: 'guest' },
     },
     {
         path: '/',
         component: PublicLayout,
+        meta: { middleware: 'auth' },
         children: [
             {
                 path: '',
                 component: Home,
                 name: 'home',
-                meta: { breadcrumb: 'Главная' },
+                meta: { breadcrumb: 'Главная', middleware: 'auth' },
             },
             {
                 path: '/tests/:id',

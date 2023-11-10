@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
 import routes from "@/router/routes.js";
+import store from "@/store/index.js";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -7,25 +8,20 @@ const router = createRouter({
     routes: routes,
 })
 
-router.beforeEach((to, from, next) => {
-   const token = localStorage.getItem('x_xsrf_token');
-   if (!token){
-        if (to.name === 'login'){
-            return next()
-        } else {
-            return next({
-                name: 'login',
-            })
+router.beforeEach((to, from, next)=> {
+    document.title = "BITEST " + to.meta.breadcrumb;
+    if(to.meta.middleware === "guest"){
+        if (store.state.Auth.authenticated){
+            next({ name: "home" })
         }
-   }
-    if (to.name === 'login' && token){
-        return next({
-            name: 'home',
-        })
+        next();
+    } else {
+        if (store.state.Auth.authenticated) {
+            next()
+        } else {
+            next({ name: "login" })
+        }
     }
-
-    next();
-
 });
 
 export default router;
