@@ -14,11 +14,11 @@
                         Мой профиль
                     </router-link>
                 </li>
-                <li class="profile-nav__item">
-                    <router-link class="profile-nav__link" to="/logout">
+                <li @click="this.logoutUser()" class="profile-nav__item">
+                    <div class="profile-nav__link">
                         <i class="bi bi-box-arrow-right"></i>
                         Выйти
-                    </router-link>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -34,7 +34,11 @@ import {mapActions, mapGetters} from "vuex";
           ...mapGetters(['modalProfile'])
         },
         methods: {
-            ...mapActions(['toggleModal'])
+            ...mapActions(['toggleModal', 'logout']),
+            logoutUser(){
+                this.logout();
+                this.$router.push( { name :"login"})
+            }
         }
 
     }
@@ -99,6 +103,7 @@ import {mapActions, mapGetters} from "vuex";
         gap: 5px;
         transition: all .3s ease;
         font-size: 15px;
+        cursor: pointer;
         &:hover{
             background-color: var(--button-bg-second);
         }
