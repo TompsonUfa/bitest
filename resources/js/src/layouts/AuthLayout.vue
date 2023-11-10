@@ -43,7 +43,7 @@
                     </div>
                     <ul v-if="this.errors" class="auth__errors">
                         <li v-for="error in this.errors">
-                            {{ error.join(', ')}}
+                            {{ typeof error === "object" ? error.join(', ') : error}}
                         </li>
                     </ul>
                     <ui-button @click="this.submitForm()" :class="this.errors ? '' : 'mt-4'">Войти</ui-button>

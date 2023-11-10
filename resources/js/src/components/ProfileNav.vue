@@ -2,7 +2,7 @@
     <div class="profile-nav">
         <div :class="modalProfile ? 'profile-nav__header_active': null" class="profile-nav__header" @click="toggleModal('profile')">
             <div class="profile-nav__wrap-img">
-                <img src='/storage/images/1.jpeg' alt="" class="profile-nav__img">
+                <img :src="this.user.avatar ? this.user.avatar : '/images/avatar.png'"  alt="" class="profile-nav__img">
             </div>
             <i class="bi bi-chevron-down profile-nav__icon"></i>
         </div>
@@ -31,7 +31,7 @@ import {mapActions, mapGetters} from "vuex";
     export default {
         name: "ProfileNav",
         computed: {
-          ...mapGetters(['modalProfile'])
+          ...mapGetters(['modalProfile', 'user'])
         },
         methods: {
             ...mapActions(['toggleModal', 'logout']),
@@ -69,10 +69,13 @@ import {mapActions, mapGetters} from "vuex";
         height: 35px;
         overflow: hidden;
         border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     &__img {
-        width: inherit;
-        height: inherit;
+        width: 20px;
+        height: 20px;
         object-fit: cover;
     }
     &__icon {
