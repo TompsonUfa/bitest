@@ -1,9 +1,14 @@
 import AuthLayout from "@/layouts/AuthLayout.vue";
 import PublicLayout from "@/layouts/PublicLayout.vue";
+import CreatedTestLayout from "@/layouts/CreatedTestLayout.vue";
+
 import Home from "@/pages/Home.vue";
+import Profile from "@/pages/Profile.vue";
 import Test from "@/pages/Test.vue";
 import PreviewTest from "@/components/PreviewTest.vue";
 import PassTest from "@/components/PassTest.vue";
+import CreatedTest from "@/pages/CreatedTest.vue";
+import CreateTest from "@/pages/CreateTest.vue";
 const routes = [
 
     {
@@ -21,7 +26,7 @@ const routes = [
                 path: '',
                 component: Home,
                 name: 'home',
-                meta: { breadcrumb: 'Главная', middleware: 'auth' },
+                meta: { breadcrumb: 'Главная'},
             },
             {
                 path: '/tests/:id',
@@ -38,12 +43,39 @@ const routes = [
                     },
                     {
                         path: 'pass',
-                        name: 'pass',
                         component: PassTest,
-                        meta: { breadcrumb: 'Выполнение теста' },
+                        name: 'pass',
+                        meta: { breadcrumb: 'Выполнение' },
                     }
                 ]
             },
+            {
+                path: '/created-tests',
+                component: CreatedTestLayout,
+                redirect: { name: 'created-list' },
+                name: 'created',
+                meta: { breadcrumb: 'Мои тесты' },
+                children: [
+                    {
+                        path: '',
+                        component: CreatedTest,
+                        name: 'created-list',
+                    },
+                    {
+                        path: 'create',
+                        component: CreateTest,
+                        name: 'create',
+                        meta: { breadcrumb: 'Создать' },
+                    }
+                ]
+            },
+
+            {
+                path: '/profile',
+                component: Profile,
+                name: 'profile',
+                meta: { breadcrumb: 'Личный кабинет' },
+            }
         ],
     },
 

@@ -31,10 +31,4 @@ export default {
 </script>
 
 <style lang="scss">
-    .main {
-        height: 100%;
-        min-height: 100vh;
-        padding-top: 55px;
-        background-color: var(--body-bg);
-    }
 </style>

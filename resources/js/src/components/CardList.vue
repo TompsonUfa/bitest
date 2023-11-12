@@ -1,9 +1,23 @@
 <template>
     <div class="cards row g-4">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-4">
             <card-item class="cards__item"></card-item>
         </div>
-
+        <div class="col-12 col-lg-4">
+            <card-item class="cards__item"></card-item>
+        </div>
+        <div class="col-12 col-lg-4">
+            <card-item class="cards__item"></card-item>
+        </div>
+        <div class="col-12 col-lg-4">
+            <card-item class="cards__item"></card-item>
+        </div>
+        <div class="col-12 col-lg-4">
+            <card-item class="cards__item"></card-item>
+        </div>
+        <div class="col-12 col-lg-4">
+            <card-item class="cards__item"></card-item>
+        </div>
     </div>
 </template>
 

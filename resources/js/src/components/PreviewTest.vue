@@ -32,9 +32,6 @@
 
 <style scoped lang="scss">
     .preview {
-    padding: 40px;
-    border-radius: 15px;
-    background-color: var(--body-bg-secondary);
     &__title{
         color: var(--main-color);
         font-size: 30px;

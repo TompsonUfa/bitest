@@ -30,7 +30,7 @@ export default {
         border: none;
         padding: 20px;
         height: 100%;
-        min-height: 350px;
+        min-height: 300px;
         overflow: hidden;
         background-color: transparent;
         &:hover &__picture{
@@ -70,8 +70,8 @@ export default {
         }
         &__title {
             color: #fff;
-            margin: 10px 0;
-            font-size: 25px;
+            margin: 5px 0;
+            font-size: 20px;
             font-weight: 500;
             line-height: 34px;
             text-shadow: 1px 1px 1px rgba(0,0,0,0.3);

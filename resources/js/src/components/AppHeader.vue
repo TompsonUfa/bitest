@@ -2,7 +2,20 @@
     <header class="header">
         <div class="container">
             <nav class="navbar p-0 justify-content-between">
-                <router-link class="navbar-brand" to="/">bitest</router-link>
+                <div class="navbar__left d-flex">
+                    <router-link class="navbar__brand navbar-brand" to="/">bitest</router-link>
+                    <ul class="navbar__nav navbar-nav">
+                        <li class="nav-item">
+                            <router-link to="/" class="nav-link">Главная</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/passed-tests" class="nav-link">Пройденные тесты</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/created-tests" class="nav-link">Мои тесты</router-link>
+                        </li>
+                    </ul>
+                </div>
                 <div class="d-flex align-items-center gap-2">
                     <div class="header__theme" @click="$emit('change-theme')">
                         <i v-if="dark" class="bi bi-brightness-high"></i>
@@ -49,11 +62,6 @@ export default {
         border-bottom: 1px solid var(--border-color);
         background-color: var(--body-bg);
         z-index: var(--index-header);
-        .navbar-brand{
-            color: var(--main-color);
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-        }
         &__search, &__theme {
             color: var(--main-color);
             font-size: 14px;
@@ -66,6 +74,33 @@ export default {
             border-radius: 10px;
             background-color: var(--button-bg);
             transition: all .3s ease;
+        }
+    }
+    .navbar {
+        &__left {
+            gap: 30px;
+        }
+        &__brand{
+            color: var(--main-color);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+        &__nav {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            font-size: 15px;
+            .nav-link.active{
+                opacity: 1;
+            }
+            .nav-link{
+                opacity: 0.7;
+                color: var(--main-color);
+                font-weight: 500;
+                &:hover{
+                    opacity: 1;
+                }
+            }
         }
     }
 </style>

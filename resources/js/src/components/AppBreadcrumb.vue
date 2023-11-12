@@ -47,6 +47,7 @@ export default {
         gap: 5px;
         flex-wrap: wrap;;
         list-style: none;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         &__item {
             display: flex;
             gap: 5px;

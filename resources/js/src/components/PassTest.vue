@@ -98,9 +98,6 @@ import {mapActions, mapGetters} from "vuex";
 
 <style scoped lang="scss">
     .test {
-        padding: 40px;
-        border-radius: 15px;
-        background-color: var(--body-bg-secondary);
         &__title{
             color: var(--main-color);
             font-size: 24px;

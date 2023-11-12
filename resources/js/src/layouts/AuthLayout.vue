@@ -2,14 +2,14 @@
     <main class="wrap-auth">
         <div class="auth">
             <div class="auth__img">
-                <img src="/images/auth.png" alt="Авторизация BITEST" />
+                <img src="/images/auth.png" alt="Авторизация" />
             </div>
             <div class="auth__form">
                 <h3 class="auth__title">Авторизация</h3>
                 <form method="post">
                     <div class="input-wrap">
                         <input v-model="this.form.login" type="text" name="login" id="login" class="auth__input" autocomplete="off"
-                               placeholder="Login" required />
+                               placeholder="Логин" required />
                         <label class="auth__label" for="login">Логин:</label>
                         <div class="auth__icon">
                             <svg enable-background="new 0 0 100 100" version="1.1" viewBox="0 0 100 100"
@@ -130,6 +130,7 @@
         font-size: 1.5rem;
         letter-spacing: 2px;
         margin-bottom: 20px;
+        color: #000;
     }
 
     .input-wrap {

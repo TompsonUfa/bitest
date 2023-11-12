@@ -3,10 +3,9 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-export default {
-    name: "Test",
-}
+ export default {
+     name: 'CreatedTestLayout',
+ }
 </script>
 
 <style scoped lang="scss">

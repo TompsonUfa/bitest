@@ -1,5 +1,4 @@
 <template>
-    <div class="content">
         <div class="row my-3">
             <div class="col-12">
                 <filter-nav></filter-nav>
@@ -16,7 +15,6 @@
                 </ui-button>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -38,7 +36,7 @@ export default {
         color: var(--main-color);
         font-weight: 600;
         background-color: transparent;
-        border: 1px solid var(--border-color-focus);
+        border: 1px solid var(--border-color);
         &:hover{
             color: #fff;
             background-color: var(--brand-color);

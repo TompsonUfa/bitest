@@ -88,27 +88,29 @@ import {mapActions, mapGetters} from "vuex";
         top: calc(var(--header-height) + 10px);
         right: 0;
         width: 200px;
-        border-radius: 10px;
-        background-color: var(--button-bg);
-        border: 1px solid var(--button-bg-second);
+        border-radius: 16px;
+        background-color: var(--body-bg);
         overflow: hidden;
+        border: 1px solid var(--border-color);
     }
     &__list {
-        padding: 0;
         margin: 0;
         list-style: none;
+        padding: 10px 12px;
     }
     &__link{
         color: var(--main-color);
         text-decoration: none;
-        padding: 15px 20px;
         display: flex;
         gap: 5px;
         transition: all .3s ease;
         font-size: 15px;
         cursor: pointer;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin-bottom: 5px;
         &:hover{
-            background-color: var(--button-bg-second);
+            background-color: var(--button-bg);
         }
     }
 }
