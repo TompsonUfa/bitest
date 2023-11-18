@@ -1,7 +1,7 @@
 <template>
     <div class="filters row justify-content-between align-items-center">
         <div class="col-3">
-            <ui-input class="filters__search" :item="this.input"></ui-input>
+
         </div>
         <div class="col col-lg-2">
             <filter-select></filter-select>
@@ -11,11 +11,9 @@
 
 <script>
 import FilterSelect from "@/components/FilterSelect.vue";
-import UiInput from "@/components/UI/UiInput.vue";
 export default {
     name: 'FilterNav',
     components: {
-        UiInput,
         FilterSelect
     },
     data(){

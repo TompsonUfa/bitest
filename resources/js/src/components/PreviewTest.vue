@@ -12,7 +12,7 @@
             </div>
             <div class="col-6">
                 <div class="preview__wrap">
-                    <img class="preview__img" src="/storage/images/1.webp" alt="">
+                    <img class="preview__img" src="/storage/images/1.jpeg" alt="">
                 </div>
             </div>
         </div>

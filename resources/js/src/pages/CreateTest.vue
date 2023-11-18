@@ -1,9 +1,9 @@
 <template>
     <div class="row test">
-        <div class="col-6">
+        <div class="col-5">
             <SelectImage @selectImage = 'selectImage' class="test__select-img"></SelectImage>
         </div>
-        <div class="col-6">
+        <div class="col-7">
             <AccordionMenu></AccordionMenu>
         </div>
     </div>
