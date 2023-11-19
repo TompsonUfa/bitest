@@ -1,18 +1,18 @@
 <template>
-    <div class="profile-nav">
-        <div :class="modalProfile ? 'profile-nav__header_active': null" class="profile-nav__header" @click="toggleModal('profile')">
+    <div tabindex="0" @blur="show = false;" class="profile-nav">
+        <div @click="show = !show" :class="show ? 'profile-nav__header_active': null" class="profile-nav__header">
             <div class="profile-nav__wrap-img">
                 <img :src="this.user.avatar ? this.user.avatar : '/images/avatar.png'"  alt="" class="profile-nav__img">
             </div>
             <i class="bi bi-chevron-down profile-nav__icon"></i>
         </div>
-        <div v-if="modalProfile" class="profile-nav__menu">
+        <div v-if="show" class="profile-nav__menu">
             <ul class="profile-nav__list">
-                <li class="profile-nav__item">
-                    <router-link class="profile-nav__link" to="/profile">
+                <li @click="this.navigateToProfile()" class="profile-nav__item">
+                    <div class="profile-nav__link">
                         <i class="bi bi-person"></i>
                         Мой профиль
-                    </router-link>
+                    </div>
                 </li>
                 <li @click="this.logoutUser()" class="profile-nav__item">
                     <div class="profile-nav__link">
@@ -27,17 +27,25 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-
     export default {
         name: "ProfileNav",
         computed: {
-          ...mapGetters(['modalProfile', 'user'])
+          ...mapGetters(['user'])
+        },
+        data(){
+          return {
+              show: false,
+          }
         },
         methods: {
-            ...mapActions(['toggleModal', 'logout']),
+            ...mapActions(['logout']),
+            navigateToProfile() {
+                this.$router.push('/profile');
+                this.show = false;
+            },
             logoutUser(){
                 this.logout();
-                this.$router.push( { name :"login"})
+                this.$router.push({ name :"login"})
             }
         }
 

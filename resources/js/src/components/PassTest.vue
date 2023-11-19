@@ -2,7 +2,12 @@
     <div class="test">
         <div class="row mb-3 align-items-center">
             <div class="col-9">
-                <question-switcher class="test__questions"></question-switcher>
+                <question-switcher :selectedQuestion="this.selectedQuestion"
+                                   :questions="this.questions"
+                                   :answers="this.answers"
+                                   @select="(item) => selectQuestion(item)"
+                                   class="test__questions">
+                </question-switcher>
             </div>
             <div class="col-1 text-end">
                 <ui-timer></ui-timer>
@@ -42,7 +47,7 @@ import {mapActions, mapGetters} from "vuex";
             ModalEndTest
         },
         computed:{
-            ...mapGetters(['test','questions', 'selectedQuestion', "answers"]),
+            ...mapGetters(['test','questions', 'selectedQuestion', 'answers', 'getAnswersById']),
         },
         mounted() {
             this.userResponses(this.test.id);

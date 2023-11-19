@@ -1,8 +1,10 @@
 <template>
-    <div class="mb-2">
         <label v-if="this.label" :for="this.id" class="form-label">{{this.label}}</label>
-        <input :type="this.type" class="input form-control" :id="this.id">
-    </div>
+        <input :tabindex="tabindex"
+               @blur="$emit('input-edit', this.value)"
+               v-model="this.value" :type="this.type"
+               class="input form-control"
+               :id="this.id">
 </template>
 
 <script>
@@ -18,9 +20,28 @@
             },
             id: {
                 type: String,
-                required: true,
+                required: false,
+            },
+            data: {
+                type: String,
+                required: false,
+                default: '',
+            },
+            tabindex: {
+                type: Number,
+                required: false,
+                default: 0,
+            },
+        },
+        data(){
+            return {
+                value: '',
             }
-        }
+        },
+        mounted() {
+            this.value = this.data;
+        },
+        emits: ["input-edit"],
     }
 </script>
 

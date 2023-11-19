@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import Auth from "@/store/modules/Auth.js";
+import auth from "@/store/modules/Auth.js";
 import modal from "@/store/modules/Modal.js";
 import test from "@/store/modules/Test.js";
 import questions from "@/store/modules/Questions.js";
@@ -8,14 +8,14 @@ import createPersistedState from 'vuex-persistedstate';
 
 const store = createStore({
     plugins:[
-        createPersistedState({paths: ['Auth']})
+        createPersistedState({paths: ['auth']})
     ],
     modules: {
-        Auth,
+        auth,
         modal,
         test,
         questions,
-        answers
+        answers,
     }
 })
 

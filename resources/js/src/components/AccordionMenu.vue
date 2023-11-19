@@ -1,137 +1,55 @@
 <template>
     <div class="accordion-menu">
-        <div class="accordion-menu__header">
-            <ui-button :class="this.selected === filter ? 'accordion-menu__btn_active' : null"
-                       class="accordion-menu__btn" v-for="filter in filters" :key="filter.id"
-                       @click="this.selected = filter">{{ filter.name }}</ui-button>
+        <div class="row">
+            <div class="col-12">
+                <div class="accordion-menu__header">
+                    <ui-button :class="this.selectedFilter === filter ? 'accordion-menu__btn_active' : null"
+                               class="accordion-menu__btn" v-for="filter in filters" :key="filter.id"
+                               @click="this.selectedFilter = filter">{{ filter.name }}</ui-button>
+                </div>
+            </div>
         </div>
-        <div class="accordion-menu__content" v-if="this.selected">
-            <template v-if="this.selected.value === 'data'">
-                <CustomInput :label="'Название'" :type="'text'" :id="'exampleInputName'"></CustomInput>
-                <div class="mb-2">
-                     <label class="form-label mb-2">{{this.selectDirection.label}}</label>
-                    <CustomSelect @select="(item) => this.selectDirection.selected = item"
-                                  @toggle-focus="this.selectDirection.focus = !this.selectDirection.focus" :item = this.selectDirection>
-                    </CustomSelect>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label mb-2">{{this.selectDiscipline.label}}</label>
-                    <CustomSelect @select="(item) => this.selectDiscipline.selected = item"
-                                  @toggle-focus="this.selectDiscipline.focus = !this.selectDiscipline.focus" :item = this.selectDiscipline>
-                    </CustomSelect>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label mb-2">{{this.selectTime.label}}</label>
-                    <CustomSelect @select="(item) => this.selectTime.selected = item"
-                                  @toggle-focus="this.selectTime.focus = !this.selectTime.focus" :item = this.selectTime>
-                    </CustomSelect>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label mb-2">{{this.selectAttempts.label}}</label>
-                    <CustomSelect @select="(item) => this.selectAttempts.selected = item"
-                                  @toggle-focus="this.selectAttempts.focus = !this.selectAttempts.focus" :item = this.selectAttempts>
-                    </CustomSelect>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label mb-2">{{this.selectDisplayQuestions.label}}</label>
-                    <CustomSelect @select="(item) => this.selectDisplayQuestions.selected = item"
-                                  @toggle-focus="this.selectDisplayQuestions.focus = !this.selectDisplayQuestions.focus" :item = this.selectDisplayQuestions>
-                    </CustomSelect>
-                </div>
-                <div>
-                    <div class="form-check d-flex gap-2 justify-content-end">
-                        <input class="form-check-input" type="checkbox" value="" id="checkPublish">
-                        <label class="form-check-label" for="checkPublish">
-                            Опубликовать
-                        </label>
-                    </div>
-                </div>
-            </template>
-            <template v-if="this.selected.value === 'questions'">
-                Вопросы
-            </template>
-            <template v-if="this.selected.value === 'access'">
-                Доступ
-            </template>
+        <div class="accordion-menu__content" v-if="this.selectedFilter">
+            <accordion-main-content v-if="this.selectedFilter.value === 'main'"></accordion-main-content>
+            <accordion-questions v-if="this.selectedFilter.value === 'questions'"></accordion-questions>
+            <accordion-access v-if="this.selectedFilter.value === 'access'"></accordion-access>
         </div>
     </div>
 </template>
 
 <script>
+import {ref} from "vue";
 import UiButton from "@/components/UI/UiButton.vue";
 import CustomInput from "@/components/UI/CustomInput.vue";
 import CustomSelect from "@/components/UI/CustomSelect.vue";
+import SelectImage from "@/components/UI/SelectImage.vue";
+import AccordionMainContent from "@/components/AccordionMainContent.vue";
+import AccordionQuestions from "@/components/AccordionQuestions.vue";
+import AccordionAccess from "@/components/AccordionAccess.vue";
 
 export default {
     name: "AccordionMenu",
-    components: {CustomSelect, CustomInput, UiButton},
+    components: {
+        AccordionAccess,
+        AccordionQuestions, AccordionMainContent, SelectImage, CustomSelect, CustomInput, UiButton},
     data(){
         return {
+            // filters
+            selectedFilter: ref(null),
             filters: [
-                {id: 1, name: 'Основное', value: 'data'},
+                {id: 1, name: 'Основное', value: 'main'},
                 {id: 2, name: 'Вопросы', value: 'questions'},
                 {id: 3, name: 'Доступ', value: 'access'},
             ],
-            selected: null,
-            selectDirection: {
-                label: "Направление",
-                selected: "",
-                focus: false,
-                options: [
-                    {id: 1, name: 'Значение с бд'},
-                ]
-            },
-            selectDiscipline: {
-                label: "Дисциплина",
-                selected: "",
-                focus: false,
-                options: [
-                    {id: 1, name: 'Значение с бд'},
-                ]
-            },
-            selectTime: {
-                label: "Время на выполнение",
-                selected: "",
-                focus: false,
-                options: [
-                    {id: 1, name: 'Неограниченно'},
-                    {id: 2, name: '15 минут', value: "15"},
-                    {id: 3, name: '30 минут', value: "30"},
-                    {id: 4, name: '1 час', value: "60"},
-                    {id: 5, name: '2 час', value: "120"},
-                ]
-            },
-            selectAttempts: {
-                label: "Количество попыток",
-                selected: "",
-                focus: false,
-                options: [
-                    {id: 1, name: 'Неограниченно'},
-                    {id: 2, name: '1 попытка', value: "1"},
-                    {id: 3, name: '2 попытки', value: "2"},
-                    {id: 4, name: '3 попытки', value: "3"},
-                ]
-            },
-            selectDisplayQuestions: {
-                label: "Отображение вопросов",
-                selected: "",
-                focus: false,
-                options: [
-                    {id: 1, name: 'Все'},
-                    {id: 2, name: '10 вопросов', value: "10"},
-                    {id: 3, name: '20 вопросов', value: "20"},
-                    {id: 4, name: '30 вопросов', value: "30"},
-                ]
-            }
         }
     },
     mounted() {
-        this.selected = this.filters[0];
-    }
+        this.selectedFilter = this.filters[0];
+    },
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     .accordion-menu {
         &__header {
             display: flex;
@@ -148,6 +66,21 @@ export default {
                 color: #fff;
                 border: 1px solid transparent;
             }
+        }
+        &__select-img {
+            width: 100%;
+            height: 350px;
+        }
+    }
+    .form-check-input{
+        &:focus {
+            border-color: var(--brand-color);
+            outline: 0;
+            box-shadow: none;
+        }
+        &:checked {
+            background-color: var(--brand-color);
+            border-color: var(--brand-color);
         }
     }
 </style>

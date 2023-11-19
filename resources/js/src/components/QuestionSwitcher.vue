@@ -1,29 +1,41 @@
 <template>
     <div class="questions">
-        <div @click="selectQuestion(question)"
+        <div @click="$emit('select', question)"
              v-for="(question, index) in questions" :key="question.id"
-             class="questions__item"
-             :class="
-             {'questions__item_active': this.selectedQuestion == question,
-                'questions__item_answered': this.answered(question)
-             }">
+             class="questions__item" :class="{'questions__item_active': selectedQuestion === question,
+             'questions__item_answered': hasAnswer(question)}">
           {{index + 1}}
         </div>
     </div>
 </template>
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapGetters} from "vuex";
 
     export default {
         name: 'QuestionSwitcher',
-        methods: {
-            ...mapActions(['selectQuestion']),
-            answered(question){
-                return !!this.getAnswersById(question.id);
-            }
+        props: {
+            questions: {
+                type: Array,
+                required: false,
+            },
+            selectedQuestion: {
+                type: Object,
+                required: false,
+            },
+            answers: {
+                type: Array,
+                required: false,
+            },
         },
         computed: {
-            ...mapGetters(['selectedQuestion', 'questions', 'getAnswersById'])
+          ...mapGetters(['getAnswersById'])
+        },
+        methods: {
+            hasAnswer(question){
+                if (this.answers){
+                    return !!this.getAnswersById(question.id);
+                }
+            }
         },
     }
 </script>

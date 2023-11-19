@@ -4,24 +4,34 @@
 
         </div>
         <div class="col col-lg-2">
-            <filter-select></filter-select>
+            <custom-select @select-item="(item) => this.filters.selected = item" class="filters__select" :item="this.filters"></custom-select>
         </div>
     </div>
 </template>
 
 <script>
-import FilterSelect from "@/components/FilterSelect.vue";
+import CustomSelect from "@/components/UI/CustomSelect.vue";
+import {ref} from "vue";
 export default {
     name: 'FilterNav',
     components: {
-        FilterSelect
+        CustomSelect
     },
     data(){
         return {
             input: {
                 label: 'Поиск...',
                 icon: '<i class="bi bi-search" data-v-8f3ed631=""></i>',
-            }
+            },
+            filters: {
+                selected: ref(null),
+                options: [
+                    {id: 1, name: 'Новые', value: 'date'},
+                    {id: 2, name: 'Категория', value: 'category'},
+                    {id: 3, name: 'Тест', value: 'test'},
+                    {id: 4, name: 'Автор', value: 'author'}
+                ]
+             }
         }
     },
 }
@@ -33,6 +43,9 @@ export default {
             .input {
                 border-radius: 16px;
             }
+        }
+        &__select {
+
         }
     }
 </style>

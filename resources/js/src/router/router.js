@@ -11,12 +11,12 @@ const router = createRouter({
 router.beforeEach((to, from, next)=> {
     document.title = "BITEST " + to.meta.breadcrumb;
     if(to.meta.middleware === "guest"){
-        if (store.state.Auth.authenticated){
+        if (store.state.auth.authenticated){
             next({ name: "home" })
         }
         next();
     } else {
-        if (store.state.Auth.authenticated) {
+        if (store.state.auth.authenticated) {
             next()
         } else {
             next({ name: "login" })

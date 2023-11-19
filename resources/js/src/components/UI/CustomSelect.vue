@@ -1,14 +1,21 @@
 <template>
-    <div class="select">
-        <div @click="$emit('toggle-focus')" class="select__header" :class="item.focus ? 'select__header_active' : ''">
-            <span>{{item.selected.name}}</span>
+    <div class="select" @blur="open = false" :tabindex="tabindex">
+        <div class="select__header" @click="open = !open">
+            <span>
+                {{this.selected.name}}
+            </span>
             <i class="bi bi-chevron-down"></i>
         </div>
-        <div v-if=item.focus class="select__menu">
+        <div v-if="this.open" class="select__menu">
             <div class="select__item"
-                 :class="item.selected === option ? 'select__item_active' : null "
-                 @click="$emit('select', option); $emit('toggle-focus')"
-                 v-for="option in item.options" :key="option.id">
+                 v-for="(option, index) of this.item.options"
+                 :key="index"
+                 @click="
+                 selected = option;
+                 open = false;
+                 $emit('select-item', option)
+                 "
+            >
                 {{option.name}}
             </div>
         </div>
@@ -20,14 +27,29 @@
         name: "CustomSelect",
         props: {
             item: {
-                type: Object,
-                required: true,
+                options: {
+                    type: Array,
+                    required: true,
+                }
+            },
+            tabindex: {
+                type: Number,
+                required: false,
+                default: 0,
+            },
+        },
+        data(){
+            return {
+                selected:
+                    this.item.selected
+                        ? this.item.selected
+                        : this.item.options.length > 0
+                            ? this.item.options[0]
+                            : null,
+                open: false,
             }
         },
-        mounted() {
-                this.$emit('select', this.item.options[0]);
-            },
-        emits: ['toggle-focus', 'select']
+        emits: ["select-item"],
     }
 </script>
 
@@ -36,16 +58,14 @@
     position: relative;
     cursor: pointer;
     color: var(--main-color);
-    height: 38px;
     font-size: 14px;
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 5px 15px;
+        padding: 0.375rem 0.75rem;
         border: 1px solid var(--border-color);
         font-weight: 600;
-        transition: all .3s ease;
         background-color: var(--body-bg);
         border-radius: 8px;
         span, i {
@@ -67,7 +87,9 @@
         left: 0;
         z-index: 3;
         width: 100%;
-        border-radius: 16px;
+        max-height: 250px;
+        overflow: auto;
+        border-radius: 8px;
         background-color: var(--body-bg);
         padding: 10px;
         border: 1px solid var(--border-color);
