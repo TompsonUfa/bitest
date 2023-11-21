@@ -1,9 +1,9 @@
 <template>
     <div class="row">
-        <div class="col-4">
+        <div class="col-5">
             <select-image class="accordion-menu__select-img"></select-image>
         </div>
-        <div class="col-8">
+        <div class="col-7">
             <div class="mb-2">
                 <CustomInput  @input-edit="(value) => this.name = value" :data="this.name" :label="'Название'" :type="'text'" :id="'exampleInputName'"></CustomInput>
             </div>
@@ -102,5 +102,8 @@
 </script>
 
 <style lang="scss">
-
+    .accordion-menu__select-img {
+        width: 100%;
+        height: 350px;
+    }
 </style>

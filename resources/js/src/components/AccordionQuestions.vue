@@ -1,10 +1,8 @@
 <template>
     <div class="row mb-4">
         <div class="col-12">
-            <QuestionSwitcher :questions="questions"></QuestionSwitcher>
+            <QuestionSwitcher v-if="questions" :questions="questions"></QuestionSwitcher>
         </div>
-    </div>
-    <div class="row">
         <div class="col-12">
             <QuestionCreationForm></QuestionCreationForm>
         </div>
@@ -22,7 +20,7 @@
         data(){
             return {
                 questions:[
-                    {id: 1, name: 'as'},
+
                 ],
             }
         }

@@ -1,31 +1,49 @@
 <template>
-    <div class="create-question row">
-        <div class="col-6">
-            <div class="mb-2">
-                <custom-input :label="'Вопрос'" :type="'text'"></custom-input>
-            </div>
-            <div class="mb-2">
-                <label class="form-label">{{this.competencies.label}}</label>
-                <custom-select :item="this.competencies" @select-item="(item) => this.competencies.selected = item"></custom-select>
-            </div>
-            <div class="mb-2">
-                <label class="form-label">{{this.typesQuestion.label}}</label>
-                <custom-select :item="this.typesQuestion" @select-item="(item) => this.typesQuestion.selected = item"></custom-select>
-            </div>
-            <div class="mb-2">
-                <label class="form-label">Варианты ответов</label>
-                <div class="create-question__options options">
-                    <div class="options__item">
-                        <input class="form-check-input" type="checkbox">
-                        <custom-input type="text"></custom-input>
-                        <ui-button class="options__btn-delete"><i class="bi bi-x-lg"></i></ui-button>
+    <div class="create-question">
+        <div class="row">
+            <div class="col-12">
+                <div class="mb-2">
+                    <div class="form-check d-flex gap-2">
+                        <input v-model="this.img" class="form-check-input" value="true" type="checkbox" id="checkImg">
+                        <label class="form-check-label" for="checkImg">
+                            Изображение
+                        </label>
+                    </div>
+                </div>
+                <div v-if="this.img" class="mb-2">
+                    <select-image class="m-auto create-question__select-img"></select-image>
+                </div>
+                <div class="mb-2">
+                    <custom-input v-model="name"
+                                  :label="'Вопрос'" :type="'text'"></custom-input>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">{{this.competencies.label}}</label>
+                    <custom-select :item="this.competencies"
+                                   @select-item="(item) => {this.competencies.selected = item;
+                                       this.competence = item}"></custom-select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">{{this.typesQuestion.label}}</label>
+                    <custom-select :item="this.typesQuestion"
+                                   @select-item="(item) => {this.typesQuestion.selected = item; this.type = item.value}">
+
+                    </custom-select>
+                </div>
+                <div v-if="type !== 'open'" class="mb-2">
+                    <label class="form-label">Варианты ответов</label>
+                    <div class="create-question__options options">
+                        <div v-for="(option, index) in options" :key="index" class="options__item">
+                            <input v-model="option.correct" class="form-check-input" type="checkbox">
+                            <custom-input v-model="option.name" type="text"></custom-input>
+                            <ui-button class="options__btn-delete"><i class="bi bi-x-lg"></i></ui-button>
+                        </div>
+                        <ui-button @click="addOption" class="options__btn-add">
+                            Добавить вариант
+                        </ui-button>
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div class="col-6">
-            <select-image class="create-question__select-img"></select-image>
         </div>
     </div>
 </template>
@@ -42,12 +60,11 @@
      components: {UiButton, CustomSelect, CustomInput, SelectImage},
      data(){
          return {
-             question: {
-                 name: '',
-                 competence: '',
-                 type: '',
-                 options: [],
-             },
+             img: false,
+             name: ref(null),
+             competence: ref(null),
+             type: ref(null),
+             options: [],
              competencies: {
                  label: 'Компетенция',
                  selected: ref(null),
@@ -65,6 +82,20 @@
                  ]
              }
          }
+     },
+     methods: {
+         addOption(){
+             const newOption = {
+                 name: '',
+                 correct: false,
+             }
+             this.options.push(newOption);
+         }
+     },
+     mounted() {
+         this.typesQuestion.selected = this.typesQuestion.options[0];
+         this.competence = this.competencies.options[0].value;
+         this.type = this.typesQuestion.options[0].value;
      }
  }
 </script>
@@ -73,8 +104,7 @@
     .create-question {
         &__select-img {
             width: 100%;
-            height: 100%;
-            max-height: 400px;
+            height: 200px;
         }
         .options {
             &__item {

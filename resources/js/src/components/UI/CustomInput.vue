@@ -1,10 +1,10 @@
 <template>
-        <label v-if="this.label" :for="this.id" class="form-label">{{this.label}}</label>
+        <label v-if="label" :for="id" class="form-label">{{label}}</label>
         <input :tabindex="tabindex"
-               @blur="$emit('input-edit', this.value)"
-               v-model="this.value" :type="this.type"
+               @input="updateValue"
+               v-model="value" :type="type"
                class="input form-control"
-               :id="this.id">
+               :id="id">
 </template>
 
 <script>
@@ -22,9 +22,8 @@
                 type: String,
                 required: false,
             },
-            data: {
-                type: String,
-                required: false,
+            value: {
+                type: [String, Number],
                 default: '',
             },
             tabindex: {
@@ -33,15 +32,12 @@
                 default: 0,
             },
         },
-        data(){
-            return {
-                value: '',
-            }
+        methods: {
+            updateValue(event) {
+                this.$emit('input', event.target.value);
+            },
         },
-        mounted() {
-            this.value = this.data;
-        },
-        emits: ["input-edit"],
+        emits: ["input"],
     }
 </script>
 

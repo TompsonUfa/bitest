@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
     .accordion-menu {
         &__header {
             display: flex;
@@ -66,21 +66,6 @@ export default {
                 color: #fff;
                 border: 1px solid transparent;
             }
-        }
-        &__select-img {
-            width: 100%;
-            height: 350px;
-        }
-    }
-    .form-check-input{
-        &:focus {
-            border-color: var(--brand-color);
-            outline: 0;
-            box-shadow: none;
-        }
-        &:checked {
-            background-color: var(--brand-color);
-            border-color: var(--brand-color);
         }
     }
 </style>
