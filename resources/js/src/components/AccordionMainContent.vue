@@ -5,7 +5,7 @@
         </div>
         <div class="col-7">
             <div class="mb-2">
-                <CustomInput  @input-edit="(value) => this.name = value" :data="this.name" :label="'Название'" :type="'text'" :id="'exampleInputName'"></CustomInput>
+                <CustomInput v-model:modelValue="this.name" :label="'Название'" :type="'text'" :id="'exampleInputName'"></CustomInput>
             </div>
             <div class="mb-2">
                 <label class="form-label">{{this.direction.label}}</label>

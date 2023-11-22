@@ -1,8 +1,9 @@
 <template>
         <label v-if="label" :for="id" class="form-label">{{label}}</label>
         <input :tabindex="tabindex"
-               @input="updateValue"
-               v-model="value" :type="type"
+               :value="modelValue"
+               @input="$emit('update:model-value', $event.target.value)"
+               :type="type"
                class="input form-control"
                :id="id">
 </template>
@@ -22,7 +23,7 @@
                 type: String,
                 required: false,
             },
-            value: {
+            modelValue: {
                 type: [String, Number],
                 default: '',
             },
@@ -32,12 +33,7 @@
                 default: 0,
             },
         },
-        methods: {
-            updateValue(event) {
-                this.$emit('input', event.target.value);
-            },
-        },
-        emits: ["input"],
+        emits: ["update:model-value"],
     }
 </script>
 

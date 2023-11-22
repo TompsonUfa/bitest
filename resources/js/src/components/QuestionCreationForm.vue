@@ -14,7 +14,7 @@
                     <select-image class="m-auto create-question__select-img"></select-image>
                 </div>
                 <div class="mb-2">
-                    <custom-input v-model="name"
+                    <custom-input v-model:modelValue="name"
                                   :label="'Вопрос'" :type="'text'"></custom-input>
                 </div>
                 <div class="mb-2">
@@ -27,7 +27,6 @@
                     <label class="form-label">{{this.typesQuestion.label}}</label>
                     <custom-select :item="this.typesQuestion"
                                    @select-item="(item) => {this.typesQuestion.selected = item; this.type = item.value}">
-
                     </custom-select>
                 </div>
                 <div v-if="type !== 'open'" class="mb-2">
@@ -35,7 +34,7 @@
                     <div class="create-question__options options">
                         <div v-for="(option, index) in options" :key="index" class="options__item">
                             <input v-model="option.correct" class="form-check-input" type="checkbox">
-                            <custom-input v-model="option.name" type="text"></custom-input>
+                            <custom-input v-model:modelValue="option.name" type="text"></custom-input>
                             <ui-button class="options__btn-delete"><i class="bi bi-x-lg"></i></ui-button>
                         </div>
                         <ui-button @click="addOption" class="options__btn-add">
