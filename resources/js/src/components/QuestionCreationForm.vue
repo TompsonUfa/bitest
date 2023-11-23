@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-between">
-                <ui-button @click="addOption">
+                <ui-button v-if="type === 'close'" @click="addOption">
                     Добавить вариант
                 </ui-button>
                 <ui-button :class="{'ui-button_disabled' : isFormInvalid}" disabled @click="addQuestion">
