@@ -1,7 +1,7 @@
 <template>
     <div class="create-question">
         <div class="row">
-            <div class="col-12 mb-3">
+            <div class="col-12">
                 <div class="mb-3">
                     <div class="form-check d-flex gap-2">
                         <input v-model="this.img" class="form-check-input" value="true" type="checkbox" id="checkImg">
@@ -154,11 +154,9 @@
                 justify-content: center;
                 align-items: center;
                 gap: 15px;
-                margin-bottom: 15px;
+                margin-bottom: 20px;
             }
-            &__item:last-child{
-                margin-bottom: 0;
-            }
+
             &__btn-delete {
                 border-radius: 8px;
                 width: 35px;
