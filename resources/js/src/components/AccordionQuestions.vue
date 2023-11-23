@@ -1,10 +1,10 @@
 <template>
     <div class="row mb-4">
-        <div class="col-12">
+        <div class="col-12 mb-3">
             <QuestionSwitcher v-if="questions" :questions="questions"></QuestionSwitcher>
         </div>
         <div class="col-12">
-            <QuestionCreationForm></QuestionCreationForm>
+            <QuestionCreationForm @add-question="addQuestion"></QuestionCreationForm>
         </div>
     </div>
 </template>
@@ -23,7 +23,12 @@
 
                 ],
             }
-        }
+        },
+        methods: {
+            addQuestion(item){
+                this.questions.push(item);
+            }
+        },
     }
 </script>
 
