@@ -58,7 +58,7 @@ export default {
         }
         &__btn {
             background-color: inherit;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-button-color);
             color: var(--main-color);
             font-weight: 600;
             &:hover, &_active {
