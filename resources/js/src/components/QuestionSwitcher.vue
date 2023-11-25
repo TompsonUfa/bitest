@@ -1,6 +1,6 @@
 <template>
     <div class="questions">
-        <div @click="$emit('select', question)"
+        <div @click="$emit('select-question', question)"
              v-for="(question, index) in questions" :key="question.id"
              class="questions__item" :class="{'questions__item_active': selectedQuestion === question,
              'questions__item_answered': hasAnswer(question)}">
@@ -37,6 +37,7 @@ import {mapGetters} from "vuex";
                 }
             }
         },
+        emits: ["select-question"],
     }
 </script>
 <style scoped lang="scss">

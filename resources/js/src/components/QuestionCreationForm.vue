@@ -15,7 +15,8 @@
                 </div>
                 <div class="mb-3">
                     <custom-input v-model:modelValue="name"
-                                  :label="'Вопрос'" :type="'text'"></custom-input>
+                                  :label="'Вопрос'" :type="'text'">
+                    </custom-input>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">{{this.competencies.label}}</label>
@@ -62,6 +63,11 @@
  export default {
      name: "QuestionCreationForm",
      components: {UiButton, CustomSelect, CustomInput, SelectImage},
+     props: {
+         selectedQuestion: {
+             type: Object,
+         }
+     },
      data(){
          return {
              img: false,
@@ -124,14 +130,20 @@
          }
      },
      watch: {
-       type(newValue){
+         type(newValue){
            if (newValue === "open"){
                this.options = [];
            }
            if (newValue === "close"){
                this.options = [{name: '', correct: true},{name: '', correct: false}];
            }
-       }
+       },
+         selectedQuestion(newValue){
+            this.name = newValue.name;
+            this.competence = newValue.competence;
+            this.type = newValue.type;
+            this.options = newValue.options;
+         }
      },
      mounted() {
          this.typesQuestion.selected = this.typesQuestion.options[0];
