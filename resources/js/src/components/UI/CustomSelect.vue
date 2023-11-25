@@ -10,8 +10,9 @@
             <div class="select__item"
                  v-for="(option, index) of this.item.options"
                  :key="index"
+                 :class="{'select__item_active': option === this.selected}"
                  @click="
-                 selected = option;
+                 this.selected = option;
                  open = false;
                  $emit('select-item', option)
                  "
@@ -23,6 +24,8 @@
 </template>
 
 <script>
+    import {ref} from "vue";
+
     export default {
         name: "CustomSelect",
         props: {
@@ -40,14 +43,22 @@
         },
         data(){
             return {
-                selected:
-                    this.item.selected
-                        ? this.item.selected
-                        : this.item.options.length > 0
-                            ? this.item.options[0]
-                            : null,
+                selected: ref(null),
                 open: false,
             }
+        },
+        watch: {
+          'item.selected': {
+              immediate: true,
+              handler(newVal) {
+                  if (newVal === null){
+                      this.selected = this.item.options[0];
+                      this.$emit("select-item", this.item.options[0])
+                  } else {
+                      this.selected = newVal;
+                  }
+              }
+          }
         },
         emits: ["select-item"],
     }

@@ -34,7 +34,6 @@ export default {
         AccordionQuestions, AccordionMainContent, SelectImage, CustomSelect, CustomInput, UiButton},
     data(){
         return {
-            // filters
             selectedFilter: ref(null),
             filters: [
                 {id: 1, name: 'Основное', value: 'main'},

@@ -1,7 +1,7 @@
 <template>
     <div class="questions">
-        <div @click="$emit('select-question', question)"
-             v-for="(question, index) in questions" :key="question.id"
+        <div v-for="(question, index) in questions" :key="question.id"
+             @click="$emit('select-question', question)"
              class="questions__item" :class="{'questions__item_active': selectedQuestion === question,
              'questions__item_answered': hasAnswer(question)}">
           {{index + 1}}

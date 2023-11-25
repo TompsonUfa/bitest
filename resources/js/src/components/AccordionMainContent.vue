@@ -52,10 +52,10 @@
                 name: '',
                 direction: {
                     label: "Направление",
+                    selected: ref(null),
                     options: [
                         {id: 1, name: 'Значение с бд'},
                     ],
-                    selected: ref(null),
                 },
                 discipline: {
                     label: "Дисциплина",
@@ -97,7 +97,7 @@
                     ]
                 },
             }
-        }
+        },
     }
 </script>
 

@@ -1,15 +1,21 @@
 <template>
-    <div class="row mb-4">
-        <div class="col-12 mb-3">
-            <QuestionSwitcher @select-question="(item) => selectedQuestion = item"
-                              v-if="questions"
-                              :selectedQuestion="selectedQuestion"
-                              :questions="questions">
-            </QuestionSwitcher>
+    <div class="row">
+        <div v-if="questions.length > 0" class="col-12 mb-3">
+            <div class="d-flex gap-2 align-items-center">
+                <QuestionSwitcher @select-question="(item) => selectedQuestion = item"
+                                  :selectedQuestion="selectedQuestion"
+                                  :questions="questions">
+                </QuestionSwitcher>
+<!--                <div v-if="questions.length > 0" @click="selectedQuestion = null" class="add-question">-->
+<!--                    <i class="bi bi-plus"></i>-->
+<!--                </div>-->
+            </div>
         </div>
         <div class="col-12">
-            <QuestionCreationForm :selectedQuestion="selectedQuestion"
-                                  @add-question="addQuestion">
+            <QuestionCreationForm :QuestionsLength="questions.length" :selectedQuestion="selectedQuestion"
+                                  @add-question="addQuestion"
+                                  @edit-question="editQuestion"
+                                  @delete-question="deleteQuestion">
             </QuestionCreationForm>
         </div>
     </div>
@@ -34,10 +40,35 @@
             addQuestion(item){
                 this.questions.push(item);
             },
+            editQuestion(newQuestion){
+                const targetIndex = this.questions.findIndex((question) => question.id === newQuestion.id);
+                if (targetIndex !== -1) {
+                    this.questions[targetIndex] = newQuestion;
+                    this.selectedQuestion = null;
+                }
+            },
+            deleteQuestion(questionId){
+                const targetIndex = this.questions.findIndex((question) => question.id === questionId);
+                if (targetIndex !== -1) {
+                    this.questions.splice(targetIndex, 1);
+                    this.selectedQuestion = null;
+                }
+            }
         },
     }
 </script>
 
 <style scoped lang="scss">
-
+    .add-question{
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 34px;
+        height: 34px;
+        font-size: 30px;
+        color: #2dce89;
+        border: 1px solid #2dce89;
+        border-radius: 50%;
+    }
 </style>
