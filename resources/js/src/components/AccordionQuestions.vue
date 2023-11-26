@@ -1,5 +1,4 @@
 <template>
-    <div class="row">
         <div v-if="questions.length > 0" class="col-12 mb-3">
             <div class="d-flex gap-2 align-items-center">
                 <QuestionSwitcher @select-question="(item) => selectedQuestion = item"
@@ -18,7 +17,6 @@
                                   @delete-question="deleteQuestion">
             </QuestionCreationForm>
         </div>
-    </div>
 </template>
 
 <script>
@@ -26,17 +24,24 @@
     import QuestionSwitcher from "@/components/QuestionSwitcher.vue";
     import QuestionCreationForm from "@/components/QuestionCreationForm.vue";
     import {ref} from "vue";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "AccordionQuestions",
         components: {QuestionCreationForm, QuestionSwitcher, CustomSelect},
         data(){
             return {
+                dataLoaded: false,
                 selectedQuestion: ref(null),
-                questions:[],
+                questions:ref([]),
             }
         },
+        mounted() {
+            this.dataLoaded = true;
+            this.questions = this.cachedQuestions;
+        },
         methods: {
+            ...mapActions(['updateQuestions']),
             addQuestion(item){
                 this.questions.push(item);
             },
@@ -55,6 +60,19 @@
                 }
             }
         },
+        watch: {
+            questions:{
+                deep: true,
+                handler(newValue, oldValue) {
+                    if (this.dataLoaded){
+                        this.updateQuestions(newValue)
+                    }
+                },
+            }
+        },
+        computed: {
+            ...mapGetters(['cachedQuestions']),
+        }
     }
 </script>
 

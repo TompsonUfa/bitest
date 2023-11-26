@@ -2,7 +2,7 @@
     <div class="select" @blur="open = false" :tabindex="tabindex">
         <div class="select__header" @click="open = !open">
             <span>
-                {{this.selected.name}}
+                {{this.selected?.name}}
             </span>
             <i class="bi bi-chevron-down"></i>
         </div>

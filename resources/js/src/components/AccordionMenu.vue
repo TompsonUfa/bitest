@@ -6,13 +6,16 @@
                     <ui-button :class="this.selectedFilter === filter ? 'accordion-menu__btn_active' : null"
                                class="accordion-menu__btn" v-for="filter in filters" :key="filter.id"
                                @click="this.selectedFilter = filter">{{ filter.name }}</ui-button>
+                    <ui-button @click="handleCreateTest">Создать тест</ui-button>
                 </div>
             </div>
         </div>
         <div class="accordion-menu__content" v-if="this.selectedFilter">
-            <accordion-main-content v-if="this.selectedFilter.value === 'main'"></accordion-main-content>
-            <accordion-questions v-if="this.selectedFilter.value === 'questions'"></accordion-questions>
-            <accordion-access v-if="this.selectedFilter.value === 'access'"></accordion-access>
+            <div class="row">
+                <accordion-main-content v-if="this.selectedFilter.value === 'main'"></accordion-main-content>
+                <accordion-questions v-if="this.selectedFilter.value === 'questions'"></accordion-questions>
+                <accordion-access v-if="this.selectedFilter.value === 'access'"></accordion-access>
+            </div>
         </div>
     </div>
 </template>
@@ -26,6 +29,7 @@ import SelectImage from "@/components/UI/SelectImage.vue";
 import AccordionMainContent from "@/components/AccordionMainContent.vue";
 import AccordionQuestions from "@/components/AccordionQuestions.vue";
 import AccordionAccess from "@/components/AccordionAccess.vue";
+import {mapActions} from "vuex";
 
 export default {
     name: "AccordionMenu",
@@ -45,6 +49,14 @@ export default {
     mounted() {
         this.selectedFilter = this.filters[0];
     },
+    methods: {
+        ...mapActions(['createTest']),
+        handleCreateTest(){
+            const response = this.createTest();
+            console.log(response);
+        }
+
+    }
 }
 </script>
 
