@@ -27,8 +27,16 @@ export default {
                     info: info,
                     questions: questions,
                 };
-                ctx.commit("setMissingFields", null);
-                return { success: true, message: "Тест успешно создан" };
+                axios.post('/api/moder', {
+                        test: test,
+                    })
+                    .then((res) => {
+                        ctx.commit("setMissingFields", null);
+                        return { success: true, message: "Тест успешно создан" };
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
             }
 
         }

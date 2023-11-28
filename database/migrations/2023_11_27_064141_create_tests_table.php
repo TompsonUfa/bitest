@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('discipline_id')->nullable();
             $table->string('img');
             $table->unsignedBigInteger('author_id');
-            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('author_idc')->references('id')->on('users')->onDelete('cascade');
             $table->integer('time')->nullable();
             $table->integer('try')->nullable();
             $table->integer('limit_questions')->nullable();

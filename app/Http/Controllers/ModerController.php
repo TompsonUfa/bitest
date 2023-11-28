@@ -16,9 +16,9 @@ class ModerController extends Controller
 
     }
 
-    public function store()
+    public function store(Request $request)
     {
-
+        dd($request);
     }
 
     public function update()
