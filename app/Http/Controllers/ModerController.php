@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TestCreateRequest;
+use App\Services\ModerService;
 use Illuminate\Http\Request;
 
 class ModerController extends Controller
@@ -16,9 +18,13 @@ class ModerController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(TestCreateRequest $request, ModerService $service)
     {
-        dd($request);
+        $info = $request->input('info');
+
+        $test = $service->createTest($info);
+
+
     }
 
     public function update()

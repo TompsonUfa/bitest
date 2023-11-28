@@ -9,6 +9,7 @@ export default {
         createTest(ctx){
             const info = ctx.getters.cachedInfo;
             const questions  = ctx.getters.cachedQuestions;
+            const userId = ctx.getters.user.id;
             const missingFields = [];
 
             if (!info || !info.title){
@@ -24,12 +25,19 @@ export default {
                 return { success: false, message: "Не все поля заполнены" };
             } else {
                 const test = {
-                    info: info,
+                    info: {
+                        title: info.title,
+                        directionId: info.direction.id,
+                        disciplineId: info.discipline.id,
+                        time: info.time.value,
+                        attempts: info.attempts.value,
+                        displayQuestions: info.displayQuestions.value,
+                        publication: info.publication,
+                        userId: userId,
+                    },
                     questions: questions,
                 };
-                axios.post('/api/moder', {
-                        test: test,
-                    })
+                axios.post('/api/moder', test)
                     .then((res) => {
                         ctx.commit("setMissingFields", null);
                         return { success: true, message: "Тест успешно создан" };

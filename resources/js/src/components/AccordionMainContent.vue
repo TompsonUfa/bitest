@@ -71,31 +71,31 @@
                         label: "Время на выполнение",
                         selected: ref(null),
                         options: [
-                            {id: 1, name: 'Неограниченно'},
-                            {id: 2, name: '15 минут', value: "15"},
-                            {id: 3, name: '30 минут', value: "30"},
-                            {id: 4, name: '1 час', value: "60"},
-                            {id: 5, name: '2 час', value: "120"},
+                            {id: 1, name: 'Неограниченно', value: null},
+                            {id: 2, name: '15 минут', value: 15},
+                            {id: 3, name: '30 минут', value: 30},
+                            {id: 4, name: '1 час', value: 60},
+                            {id: 5, name: '2 час', value: 120},
                         ]
                     },
                     attempts: {
                         label: "Количество попыток",
                         selected: ref(null),
                         options: [
-                            {id: 1, name: 'Неограниченно'},
-                            {id: 2, name: '1 попытка', value: "1"},
-                            {id: 3, name: '2 попытки', value: "2"},
-                            {id: 4, name: '3 попытки', value: "3"},
+                            {id: 1, name: 'Неограниченно', value: null},
+                            {id: 2, name: '1 попытка', value: 1},
+                            {id: 3, name: '2 попытки', value: 2},
+                            {id: 4, name: '3 попытки', value: 3},
                         ]
                     },
                     displayQuestions: {
                         label: "Отображение вопросов",
                         selected: ref(null),
                         options: [
-                            {id: 1, name: 'Все'},
-                            {id: 2, name: '10 вопросов', value: "10"},
-                            {id: 3, name: '20 вопросов', value: "20"},
-                            {id: 4, name: '30 вопросов', value: "30"},
+                            {id: 1, name: 'Все', value: null},
+                            {id: 2, name: '10 вопросов', value: 10},
+                            {id: 3, name: '20 вопросов', value: 20},
+                            {id: 4, name: '30 вопросов', value: 30},
                         ]
                     },
                 },
