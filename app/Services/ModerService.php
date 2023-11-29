@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Models\Option;
 use App\Models\Test;
+use App\Models\Question;
+
 use Illuminate\Support\Facades\DB;
 
 class ModerService
 {
-    public function createTest($info)
+    public function createTest($info, $questions)
     {
         try {
             DB::beginTransaction();
@@ -25,6 +28,28 @@ class ModerService
             $test->img = null;
 
             $test->save();
+
+            foreach ($questions as $question){
+                $questionDb = new Question;
+                $questionDb->name = $question['name'];
+                $questionDb->competence_id = $question['competence']['id'];
+                $questionDb->open = $question['typeQuestion']['value'] === 'open' ?? true;
+                $questionDb->test_id = $test->id;
+                $questionDb->save();
+
+                if ($question['typeQuestion']['value'] === 'close')
+                {
+                    $options = $question['options'];
+                    foreach ($options as $option){
+                        $optionDb = new Option;
+                        $optionDb->name = $option['name'];
+                        $optionDb->correct = $option['correct'];
+                        $optionDb->question_id = $questionDb->id;
+                        $optionDb->save();
+                    }
+                }
+
+            }
 
             DB::commit();
 
