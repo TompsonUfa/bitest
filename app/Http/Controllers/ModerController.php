@@ -24,7 +24,7 @@ class ModerController extends Controller
 
         $test = $service->createTest($info);
 
-
+        dd($test);
     }
 
     public function update()
