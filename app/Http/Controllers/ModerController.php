@@ -22,10 +22,8 @@ class ModerController extends Controller
     {
         $info = $request->input('info');
         $questions = $request->input('questions');
-
-        $test = $service->createTest($info,$questions);
-
-        dd($test);
+        $accesses = $request->input('accesses');
+        return $service->createTest($info, $questions, $accesses);
     }
 
     public function update()

@@ -6,9 +6,13 @@ export default {
         updateQuestions(ctx, questions){
             ctx.commit('updateQuestions', questions)
         },
+        updateAccesses(ctx, accesses){
+            ctx.commit('updateAccesses', accesses)
+        },
         createTest(ctx){
             const info = ctx.getters.cachedInfo;
             const questions  = ctx.getters.cachedQuestions;
+            const accesses = ctx.getters.cachedAccesses;
             const userId = ctx.getters.user.id;
             const missingFields = [];
 
@@ -36,6 +40,7 @@ export default {
                         userId: userId,
                     },
                     questions: questions,
+                    accesses: accesses,
                 };
                 axios.post('/api/moder', test)
                     .then((res) => {
@@ -56,6 +61,9 @@ export default {
         updateQuestions(state, questions) {
             state.questions = questions;
         },
+        updateAccesses(state, accesses) {
+            state.accesses = accesses;
+        },
         setMissingFields(state, missingFields){
             state.missingFields = missingFields;
         }
@@ -63,16 +71,12 @@ export default {
     state: {
         info: null,
         questions: [],
-        accessUsers: [],
-        accessGroups: [],
+        accesses: [],
         missingFields: [],
     },
     getters: {
-        accessUsers(state){
-            return state.accessUsers;
-        },
-        accessGroups(state){
-            return state.accessGroups;
+        cachedAccesses(state){
+            return state.accesses;
         },
         cachedInfo(state){
             return state.info

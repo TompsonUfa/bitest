@@ -5,9 +5,6 @@
                                   :selectedQuestion="selectedQuestion"
                                   :questions="questions">
                 </QuestionSwitcher>
-<!--                <div v-if="questions.length > 0" @click="selectedQuestion = null" class="add-question">-->
-<!--                    <i class="bi bi-plus"></i>-->
-<!--                </div>-->
             </div>
         </div>
         <div class="col-12">

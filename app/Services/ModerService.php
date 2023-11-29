@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Access;
 use App\Models\Option;
 use App\Models\Test;
 use App\Models\Question;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class ModerService
 {
-    public function createTest($info, $questions)
+    public function createTest($info, $questions, $accesses)
     {
         try {
             DB::beginTransaction();
@@ -51,9 +52,17 @@ class ModerService
 
             }
 
+            foreach ($accesses as $access){
+                $accessDb = new Access;
+                $accessDb->test_id = $test->id;
+                $accessDb->user_id = $access['type'] === 'users' ? $access['id'] : null;
+                $accessDb->group_id = $access['type'] === 'groups' ? $access['id'] : null;
+                $accessDb->save();
+            }
+
             DB::commit();
 
-            return response()->json(['success' => true, 'message' => "Тест создан, вопросы теста в обработки"]);
+            return response()->json(['success' => true, 'message' => "Тест успешно создан."]);
         } catch (\Exception $e){
             DB::rollBack();
             return response()->json(['error' => $e->getMessage()], 500);
