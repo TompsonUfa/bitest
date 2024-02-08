@@ -5,7 +5,8 @@
                 <div class="accordion-menu__header">
                     <ui-button :class="this.selectedFilter === filter ? 'accordion-menu__btn_active' : null"
                                class="accordion-menu__btn" v-for="filter in filters" :key="filter.id"
-                               @click="this.selectedFilter = filter">{{ filter.name }}</ui-button>
+                               @click="this.selectedFilter = filter">{{ filter.name }}
+                    </ui-button>
                     <ui-button @click="handleCreateTest">Создать тест</ui-button>
                 </div>
             </div>
@@ -35,8 +36,9 @@ export default {
     name: "AccordionMenu",
     components: {
         AccordionAccess,
-        AccordionQuestions, AccordionMainContent, SelectImage, CustomSelect, CustomInput, UiButton},
-    data(){
+        AccordionQuestions, AccordionMainContent, SelectImage, CustomSelect, CustomInput, UiButton
+    },
+    data() {
         return {
             selectedFilter: ref(null),
             filters: [
@@ -51,7 +53,7 @@ export default {
     },
     methods: {
         ...mapActions(['createTest']),
-        handleCreateTest(){
+        handleCreateTest() {
             const response = this.createTest();
             console.log(response);
         }
@@ -61,22 +63,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .accordion-menu {
-        &__header {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        &__btn {
-            background-color: inherit;
-            border: 1px solid var(--border-button-color);
-            color: var(--main-color);
-            font-weight: 600;
-            &:hover, &_active {
-                background-color: var(--brand-color);
-                color: #fff;
-                border: 1px solid transparent;
-            }
+.accordion-menu {
+    &__header {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    &__btn {
+        background-color: inherit;
+        border: 1px solid var(--border-button-color);
+        color: var(--main-color);
+        font-weight: 600;
+
+        &:hover, &_active {
+            background-color: var(--brand-color);
+            color: #fff;
+            border: 1px solid transparent;
         }
     }
+}
 </style>

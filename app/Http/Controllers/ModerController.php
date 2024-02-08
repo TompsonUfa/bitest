@@ -20,9 +20,11 @@ class ModerController extends Controller
 
     public function store(TestCreateRequest $request, ModerService $service)
     {
+        dd($request->file('img'));
         $info = $request->input('info');
         $questions = $request->input('questions');
         $accesses = $request->input('accesses');
+
         return $service->createTest($info, $questions, $accesses);
     }
 

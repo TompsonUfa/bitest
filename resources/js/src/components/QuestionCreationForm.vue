@@ -24,11 +24,6 @@
                     </custom-input>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">{{this.competencies.label}}</label>
-                    <custom-select :item="this.competencies"
-                                   @select-item="(item) => {this.competencies.selected = item;}"></custom-select>
-                </div>
-                <div class="mb-3">
                     <label class="form-label">{{this.typesQuestion.label}}</label>
                     <custom-select :item="this.typesQuestion"
                                    @select-item="(item) => {this.typesQuestion.selected = item;}">
@@ -75,7 +70,7 @@ import {ref} from "vue";
              type: Object,
              default: null,
          },
-         QuestionsLength: {
+         questionsLength: {
              type: Number,
              default: 0,
          }
@@ -86,14 +81,6 @@ import {ref} from "vue";
              img: false,
              name: ref(null),
              options: [{name: '', correct: true},{name: '', correct: false}],
-             competencies: {
-                 label: 'Компетенция',
-                 selected: ref(null),
-                 options: [
-                     {id: 1, name: "GR-222"},
-                     {id: 2, name: "223-222"}
-                 ]
-             },
              typesQuestion: {
                  label: 'Тип ответа',
                  selected: ref(null),
@@ -120,9 +107,8 @@ import {ref} from "vue";
          addQuestion(){
             if (!this.isFormInvalid){
                 const question = {
-                    id: this.QuestionsLength === 0 ? 1 : this.QuestionsLength + 1,
+                    id: this.questionsLength === 0 ? 1 : this.questionsLength + 1,
                     name: this.name,
-                    competence: this.competencies.selected,
                     typeQuestion: this.typesQuestion.selected,
                     options: this.options,
                 };
@@ -134,7 +120,6 @@ import {ref} from "vue";
              const question = {
                  id: this.id,
                  name: this.name,
-                 competence: this.competencies.selected,
                  typeQuestion: this.typesQuestion.selected,
                  options: this.options,
              };
@@ -148,7 +133,6 @@ import {ref} from "vue";
          resetForm() {
              this.id = null;
              this.name = null;
-             this.competencies.selected = null;
              this.typesQuestion.selected = null;
              this.options = [{ name: '', correct: true }, { name: '', correct: false }];
          },
@@ -157,7 +141,6 @@ import {ref} from "vue";
          isFormInvalid(){
              return (
                  !this.name ||
-                 !this.competencies.selected ||
                  this.typesQuestion.selected.value === "close" && this.options.some(option => !option.name)||
                  this.typesQuestion.selected.value === "close" && !this.options.some(option => option.correct)
              );
@@ -168,7 +151,6 @@ import {ref} from "vue";
              if (newValue !== null ){
                  this.id = newValue.id;
                  this.typesQuestion.selected = newValue.typeQuestion;
-                 this.competencies.selected = newValue.competence;
                  this.name = newValue.name;
                  this.options = JSON.parse(JSON.stringify(newValue.options));
              } else {

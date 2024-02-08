@@ -1,38 +1,46 @@
 import router from "@/router/router.js";
-export  default  {
+
+export default {
     actions: {
-        login(ctx){
-            return axios.get('/api/user').then(res =>{
-                ctx.commit('SET_USER',res.data)
-                ctx.commit('SET_AUTHENTICATED',true)
-                router.push({name:'home'})
+        checkAuth(ctx) {
+            return axios.get('/api/user')
+                .catch(err => {
+                    ctx.dispatch('logout');
+                });
+        },
+        login(ctx) {
+            return axios.get('/api/user').then(res => {
+                ctx.commit('SET_USER', res.data)
+                ctx.commit('SET_AUTHENTICATED', true)
+                router.push({name: 'home'})
             }).catch(err => {
-                ctx.commit('SET_USER',{})
-                ctx.commit('SET_AUTHENTICATED',false)
+                ctx.dispatch('logout');
             })
         },
-        logout(ctx){
-            ctx.commit('SET_USER',{})
-            ctx.commit('SET_AUTHENTICATED',false)
+        logout(ctx) {
+            ctx.commit('SET_USER', {})
+            ctx.commit('SET_AUTHENTICATED', false)
+
+            axios.post('/logout')
         }
     },
     mutations: {
-        SET_AUTHENTICATED (state, value) {
+        SET_AUTHENTICATED(state, value) {
             state.authenticated = value
         },
-        SET_USER (state, value) {
+        SET_USER(state, value) {
             state.user = value
         }
     },
     state: {
-        authenticated:false,
-        user:{}
+        authenticated: false,
+        user: {}
     },
     getters: {
-        authenticated(state){
+        authenticated(state) {
             return state.authenticated
         },
-        user(state){
+        user(state) {
             return state.user
         }
     },

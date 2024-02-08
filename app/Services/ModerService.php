@@ -13,27 +13,25 @@ class ModerService
 {
     public function createTest($info, $questions, $accesses)
     {
+        dd($info);
         try {
             DB::beginTransaction();
 
             $test = new Test;
 
             $test->title = $info['title'];
-            $test->direction_id = $info['directionId'];
-            $test->discipline_id = $info['disciplineId'];
             $test->author_id = $info['userId'];
-            $test->time = $info['time'] ?? null;
-            $test->try = $info['attempts'] ?? null;
-            $test->limit_questions = $info['displayQuestions'] ?? null;
-            $test->posting = $info['publication'];
-            $test->img = null;
+            $test->time_complete = $info['time'] ?? null;
+            $test->attempts = $info['attempts'] ?? null;
+            $test->limit_questions = $info['limitQuestions'] ?? null;
+            $test->published = $info['published'];
+            $test->image = null;
 
             $test->save();
 
             foreach ($questions as $question){
                 $questionDb = new Question;
                 $questionDb->name = $question['name'];
-                $questionDb->competence_id = $question['competence']['id'];
                 $questionDb->open = $question['typeQuestion']['value'] === 'open' ?? true;
                 $questionDb->test_id = $test->id;
                 $questionDb->save();

@@ -9,52 +9,52 @@ import PreviewTest from "@/components/PreviewTest.vue";
 import PassTest from "@/components/PassTest.vue";
 import CreatedTest from "@/pages/CreatedTest.vue";
 import CreateTest from "@/pages/CreateTest.vue";
-const routes = [
 
+const routes = [
     {
         path: '/login',
         component: AuthLayout,
         name: 'login',
-        meta: { breadcrumb: 'Авторизация', middleware: 'guest' },
+        meta: {breadcrumb: 'Авторизация', middleware: 'guest'},
     },
     {
         path: '/',
         component: PublicLayout,
-        meta: { middleware: 'auth' },
+        meta: {middleware: 'auth'},
         children: [
             {
                 path: '',
                 component: Home,
                 name: 'home',
-                meta: { breadcrumb: 'Главная'},
+                meta: {breadcrumb: 'Главная'},
             },
             {
                 path: '/tests/:id',
-                redirect: { name: 'preview' },
+                redirect: {name: 'preview'},
                 component: Test,
                 name: 'test',
-                meta: { breadcrumb: 'Тест' },
+                meta: {breadcrumb: 'Тест'},
                 children: [
                     {
                         path: '',
                         component: PreviewTest,
                         name: 'preview',
-                        meta: { breadcrumb: 'Просмотр' },
+                        meta: {breadcrumb: 'Просмотр'},
                     },
                     {
                         path: 'pass',
                         component: PassTest,
                         name: 'pass',
-                        meta: { breadcrumb: 'Выполнение' },
+                        meta: {breadcrumb: 'Выполнение'},
                     }
                 ]
             },
             {
                 path: '/created-tests',
                 component: CreatedTestLayout,
-                redirect: { name: 'created-list' },
+                redirect: {name: 'created-list'},
                 name: 'created',
-                meta: { breadcrumb: 'Мои тесты' },
+                meta: {breadcrumb: 'Мои тесты'},
                 children: [
                     {
                         path: '',
@@ -65,7 +65,7 @@ const routes = [
                         path: 'create',
                         component: CreateTest,
                         name: 'create',
-                        meta: { breadcrumb: 'Создать' },
+                        meta: {breadcrumb: 'Создать'},
                     }
                 ]
             },
@@ -74,12 +74,10 @@ const routes = [
                 path: '/profile',
                 component: Profile,
                 name: 'profile',
-                meta: { breadcrumb: 'Личный кабинет' },
+                meta: {breadcrumb: 'Личный кабинет'},
             }
         ],
     },
-
-
 ]
 
 export default routes;

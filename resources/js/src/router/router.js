@@ -8,18 +8,21 @@ const router = createRouter({
     routes: routes,
 })
 
-router.beforeEach((to, from, next)=> {
+router.beforeEach((to, from, next) => {
     document.title = "BITEST " + to.meta.breadcrumb;
-    if(to.meta.middleware === "guest"){
-        if (store.state.auth.authenticated){
-            next({ name: "home" })
+
+    if (to.meta.middleware === "guest") {
+        if (store.state.auth.authenticated) {
+            next({name: "home"})
         }
         next();
     } else {
+        store.dispatch('checkAuth');
+
         if (store.state.auth.authenticated) {
             next()
         } else {
-            next({ name: "login" })
+            next({name: "login"})
         }
     }
 });

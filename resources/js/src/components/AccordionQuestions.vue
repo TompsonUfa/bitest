@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="col-12">
-            <QuestionCreationForm :QuestionsLength="questions.length" :selectedQuestion="selectedQuestion"
+            <QuestionCreationForm :questionsLength="questions.length" :selectedQuestion="selectedQuestion"
                                   @add-question="addQuestion"
                                   @edit-question="editQuestion"
                                   @delete-question="deleteQuestion">

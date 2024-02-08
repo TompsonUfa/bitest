@@ -53,7 +53,6 @@ export default {
     },
     methods: {
         setTheme(theme) {
-            localStorage.setItem("theme-mode", theme);
             if (theme === "dark") {
                 this.dark = true;
                 document.body.classList.add("dark");
@@ -61,6 +60,7 @@ export default {
                 this.dark = false;
                 document.body.classList.remove("dark");
             }
+            localStorage.setItem("theme-mode", theme);
         },
         changeTheme() {
             if (this.dark === true) {
