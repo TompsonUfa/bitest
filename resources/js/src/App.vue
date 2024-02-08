@@ -4,16 +4,15 @@
 </template>
 
 <script>
-import AppHeader from "./components/AppHeader.vue";
-import ModalSearch from "@/components/ModalSearch.vue";
 import AppLoader from "@/components/AppLoader.vue";
 
 import {mapGetters} from "vuex";
+
 export default {
     components: {
         AppLoader
     },
-    data(){
+    data() {
         return {
             loader: false,
         }
@@ -24,7 +23,7 @@ export default {
             next();
         })
         this.$router.afterEach((to, from) => {
-            setTimeout(() =>  this.loader = false, 500);
+            setTimeout(() => this.loader = false, 500);
         })
     }
 }

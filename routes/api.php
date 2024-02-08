@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\ImageController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -10,10 +10,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    Route::controller(TestController::class)->prefix('/tests')->group(function () {
-
-        Route::get('', 'index')->name('tests.index');
-
-    });
+    Route::post('/upload-image', [ImageController::class, 'store']);
 
 });

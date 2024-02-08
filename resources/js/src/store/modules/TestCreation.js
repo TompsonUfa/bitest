@@ -1,3 +1,5 @@
+import router from "../../router/router.js";
+
 export default {
     actions: {
         updateInfo(ctx, info) {
@@ -27,40 +29,30 @@ export default {
             if (missingFields.length > 0) {
                 ctx.commit("setMissingFields", missingFields);
                 return {success: false, message: "Не все поля заполнены"};
-            } else {
-                // const test = {
-                //     title: info.title,
-                //     img: info.img,
-                //     timeComplete: info.timeComplete.value,
-                //     attempts: info.attempts.value,
-                //     limitQuestions: info.limitQuestions.value,
-                //     published: info.published,
-                //     userId: userId,
-                //     questions: questions,
-                //     accesses: accesses,
-                // };
-                const formData = new FormData();
-                formData.append('title', info.title);
-                formData.append('img', info.img);
-                formData.append('timeComplete', info.timeComplete.value);
-                formData.append('attempts', info.attempts.value);
-                formData.append('limitQuestions', info.limitQuestions.value);
-                formData.append('published', info.published);
-                formData.append('userId', userId);
-                formData.append('questions', JSON.stringify(questions)); // Если questions - это массив объектов
-                formData.append('accesses', JSON.stringify(accesses)); // Если accesses - это массив объектов
-
-                axios.post('/api/moder', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }).then((res) => {
-                    ctx.commit("setMissingFields", null);
-                }).catch((err) => {
-                    console.log(err)
-                })
             }
 
+            const test = {
+                title: info.title,
+                image: info.image,
+                timeComplete: info.timeComplete.value,
+                attempts: info.attempts.value,
+                limitQuestions: info.limitQuestions.value,
+                published: info.published,
+                userId: userId,
+            };
+
+            axios.post('/api/moder/tests',
+                {
+                    'info': test,
+                    'questions': questions,
+                    'accesses': accesses
+                }).then((res) => {
+                ctx.commit("setMissingFields", null);
+                ctx.commit("clearStateTest");
+                router.push({name: 'created-tests'});
+            }).catch((err) => {
+                console.log(err)
+            })
         }
     },
     mutations: {
@@ -75,6 +67,11 @@ export default {
         },
         setMissingFields(state, missingFields) {
             state.missingFields = missingFields;
+        },
+        clearStateTest(state) {
+            state.info = null;
+            state.questions = [];
+            state.accesses = [];
         }
     },
     state: {

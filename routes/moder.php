@@ -1,13 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ModerController;
+use App\Http\Controllers\Moder\TestController;
 
-Route::group(['middleware' => 'auth:sanctum'], function (){
 
-    Route::get('', [ModerController::class, 'index'])->name('moder.index');
+Route::group(['middleware' => 'auth:sanctum'], function () {
 
-    Route::post('', [ModerController::class, 'store'])->name('moder.store');
+    Route::get('tests/created-by/{user}', [TestController::class, 'index']);
+
+    Route::post('tests', [TestController::class, 'store']);
 
 });
+
+

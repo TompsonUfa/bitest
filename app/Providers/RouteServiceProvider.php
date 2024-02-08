@@ -35,6 +35,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('api')
                 ->prefix('api/moder')
+                ->name('moder.')
                 ->group(base_path('routes/moder.php'));
 
             Route::middleware('web')

@@ -2,13 +2,13 @@ import AuthLayout from "@/layouts/AuthLayout.vue";
 import PublicLayout from "@/layouts/PublicLayout.vue";
 import CreatedTestLayout from "@/layouts/CreatedTestLayout.vue";
 
-import Home from "@/pages/Home.vue";
-import Profile from "@/pages/Profile.vue";
-import Test from "@/pages/Test.vue";
+import Home from "@/views/Home.vue";
+import Profile from "@/views/Profile.vue";
+import Test from "@/views/Test.vue";
 import PreviewTest from "@/components/PreviewTest.vue";
 import PassTest from "@/components/PassTest.vue";
-import CreatedTest from "@/pages/CreatedTest.vue";
-import CreateTest from "@/pages/CreateTest.vue";
+import CreatedTest from "@/views/CreatedTest.vue";
+import CreateTest from "@/views/CreateTest.vue";
 
 const routes = [
     {
@@ -52,14 +52,14 @@ const routes = [
             {
                 path: '/created-tests',
                 component: CreatedTestLayout,
-                redirect: {name: 'created-list'},
+                redirect: {name: 'created-tests'},
                 name: 'created',
                 meta: {breadcrumb: 'Мои тесты'},
                 children: [
                     {
                         path: '',
                         component: CreatedTest,
-                        name: 'created-list',
+                        name: 'created-tests',
                     },
                     {
                         path: 'create',

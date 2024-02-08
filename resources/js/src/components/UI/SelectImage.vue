@@ -14,11 +14,23 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "SelectImage",
+    props: {
+      image: {
+          type: String,
+      }
+    },
     data() {
         return {
             selectedImages: null,
+        }
+    },
+    watch: {
+        image(newValue, oldValue){
+            this.selectedImages = newValue;
         }
     },
     methods: {
@@ -34,7 +46,18 @@ export default {
                     this.selectedImages = e.target.result;
                 };
                 reader.readAsDataURL(file);
-                this.$emit('select-image', file);
+
+                axios.post('/api/upload-image', {'image': file}, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(res => {
+                        this.$emit('select-image', res.data.image);
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             }
         }
     },

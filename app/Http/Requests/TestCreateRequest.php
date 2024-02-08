@@ -14,11 +14,13 @@ class TestCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'time' => 'nullable|integer',
-            'attempts' => 'nullable|integer',
-            'limitQuestions' => 'nullable|integer',
-            'userId' => 'required|integer',
+            'info.title' => 'required|string',
+            'info.time' => 'nullable|integer',
+            'info.attempts' => 'nullable|integer',
+            'info.limitQuestions' => 'nullable|integer',
+            'info.userId' => 'required|integer',
+            'info.image' => 'required|string',
+            'questions' => 'required|array',
         ];
     }
 }
