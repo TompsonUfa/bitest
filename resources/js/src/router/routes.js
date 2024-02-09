@@ -8,7 +8,7 @@ import Test from "@/views/Test.vue";
 import PreviewTest from "@/components/PreviewTest.vue";
 import PassTest from "@/components/PassTest.vue";
 
-import CreatedTestView from "@/views/Test/indexView.vue";
+import CreatedTestView from "@/views/Test/IndexView.vue";
 import CreateTestView from "@/views/Test/CreateView.vue";
 import EditTestView from "@/views/Test/EditView.vue";
 

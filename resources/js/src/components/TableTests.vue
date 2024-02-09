@@ -11,41 +11,15 @@
             </thead>
             <tbody>
                 <TableTestsItem :test="test" v-for="(test, index) in tests" :key="index"></TableTestsItem>
-            <!--            <tr>-->
-            <!--                <td>-->
-            <!--                    <div class="table__media media">-->
-            <!--                        <div class="media__img">-->
-            <!--                            <img src="/storage/images/1.webp" alt="">-->
-            <!--                        </div>-->
-            <!--                        <div class="media__text">-->
-            <!--                            Физика-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--                <td>Нано-частицы</td>-->
-            <!--                <td>-->
-            <!--                    <span class="badge badge-dot mr-4">-->
-            <!--                        <i class="bg-success"></i>-->
-            <!--                        Опубликован-->
-            <!--                    </span>-->
-            <!--                </td>-->
-            <!--                <td>-->
-            <!--                    <div class="d-flex gap-2 align-items-center">-->
-            <!--                        <span>100%</span>-->
-            <!--                        <div class="progress">-->
-            <!--                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--                <td>-->
-            <!--                    <div class="table__dropdown dropdown">-->
-            <!--                        <div class="dropdown__btn">-->
-            <!--                            <i class="bi bi-three-dots"></i>-->
-            <!--                        </div>-->
-            <!--                        <div class="dropdown__menu"></div>-->
-            <!--                    </div>-->
-            <!--                </td>-->
-            <!--            </tr>-->
+                <ui-button @click="this.clearStateTest()">Очистить кэш</ui-button>
+
+
+                <!--                    <div class="d-flex gap-2 align-items-center">-->
+                <!--                        <span>100%</span>-->
+                <!--                        <div class="progress">-->
+                <!--                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
             </tbody>
         </table>
     </div>
@@ -53,6 +27,8 @@
 
 <script>
 import TableTestsItem from "@/components/TableTestsItem.vue";
+import UiButton from "./UI/UiButton.vue";
+import {mapActions} from "vuex";
 export default {
     name: "TableTests",
     props: {
@@ -62,7 +38,11 @@ export default {
         }
     },
     components: {
+        UiButton,
         TableTestsItem
+    },
+    methods: {
+        ...mapActions(['clearStateTest'])
     }
 }
 </script>

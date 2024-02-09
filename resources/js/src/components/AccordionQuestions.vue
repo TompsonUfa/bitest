@@ -34,13 +34,17 @@
             }
         },
         props: {
-            questionsTest: {
+            testQuestions: {
+                required: true,
+            },
+            event: {
+                type: String,
                 required: true,
             }
         },
         mounted() {
             this.dataLoaded = true;
-            this.questions = this.questionsTest;
+            this.questions = this.testQuestions;
         },
         methods: {
             ...mapActions(['updateQuestions']),
@@ -67,7 +71,7 @@
                 deep: true,
                 handler(newValue, oldValue) {
                     if (this.dataLoaded){
-                        this.updateQuestions(newValue)
+                        this.updateQuestions([this.event, newValue])
                     }
                 },
             }

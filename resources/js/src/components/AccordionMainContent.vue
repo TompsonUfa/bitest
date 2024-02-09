@@ -2,7 +2,7 @@
     <div class="col-5">
         <select-image @select-image="(image) => this.form.image = image"
                       class="accordion-menu__select-img"
-                      :image = "this.form.image">
+                      :image="this.form.image">
         </select-image>
     </div>
     <div class="col-7">
@@ -39,7 +39,7 @@ import CustomInput from "@/components/UI/CustomInput.vue";
 import SelectImage from "@/components/UI/SelectImage.vue";
 import CustomSelect from "@/components/UI/CustomSelect.vue";
 import {ref} from "vue";
-import {mapActions, mapGetters} from "vuex";
+import {mapActions} from "vuex";
 
 export default {
     name: "AccordionMainContent",
@@ -86,33 +86,29 @@ export default {
         }
     },
     mounted() {
-        if (this.infoTest) {
+        if(this.infoTest){
             this.form.title = this.infoTest.title;
             this.form.image = this.infoTest.image;
-            this.form.timeComplete.selected = this.infoTest.timeComplete;
-            this.form.attempts.selected = this.infoTest.attempts;
-            this.form.limitQuestions.selected = this.infoTest.limitQuestions;
+            this.form.timeComplete.selected = this.form.timeComplete.options.find(item => item.value === this.infoTest.timeComplete);
+            this.form.attempts.selected = this.form.attempts.options.find(item => item.value === this.infoTest.attempts);
+            this.form.limitQuestions.selected = this.form.limitQuestions.options.find(item => item.value === this.infoTest.limitQuestions);
             this.form.published = this.infoTest.published;
         }
-
-        this.dataLoaded = true
     },
     watch: {
         form: {
             deep: true,
             handler(newForm, oldForm) {
-                if (this.dataLoaded) {
-                    const info = {
-                        title: newForm.title,
-                        image: newForm.image,
-                        timeComplete: newForm.timeComplete.selected,
-                        attempts: newForm.attempts.selected,
-                        limitQuestions: newForm.limitQuestions.selected,
-                        published: newForm.published,
-                    }
-
-                    this.updateInfo(info);
+                const info = {
+                    title: newForm.title,
+                    image: newForm.image,
+                    timeComplete: newForm.timeComplete.selected.value,
+                    attempts: newForm.attempts.selected.value,
+                    limitQuestions: newForm.limitQuestions.selected.value,
+                    published: newForm.published,
                 }
+
+                this.updateInfo([this.event, info]);
             },
         },
     },
@@ -122,6 +118,10 @@ export default {
     props: {
         infoTest: {
             required: true,
+        },
+        event: {
+            required: true,
+            type: String,
         }
     }
 }

@@ -11,6 +11,9 @@ export default {
         updateAccesses(ctx, accesses) {
             ctx.commit('updateAccesses', accesses)
         },
+        clearStateTest(ctx) {
+            ctx.commit('clearStateTest', '');
+        },
         createTest(ctx) {
             const info = ctx.getters.cachedInfo;
             const questions = ctx.getters.cachedQuestions;
@@ -34,9 +37,9 @@ export default {
             const test = {
                 title: info.title,
                 image: info.image,
-                timeComplete: info.timeComplete.value,
-                attempts: info.attempts.value,
-                limitQuestions: info.limitQuestions.value,
+                timeComplete: info.timeComplete,
+                attempts: info.attempts,
+                limitQuestions: info.limitQuestions,
                 published: info.published,
                 userId: userId,
             };
@@ -57,10 +60,28 @@ export default {
     },
     mutations: {
         updateInfo(state, info) {
-            state.info = info;
+            const keyToUpdate = info[0];
+            const valueToUpdate = info[1];
+            const indexToUpdate = state.info.findIndex(item => Object.keys(item)[0] === keyToUpdate);
+
+            if (indexToUpdate !== -1) {
+                const updatedItem = {[keyToUpdate]: valueToUpdate};
+                state.info.splice(indexToUpdate, 1, updatedItem);
+            } else {
+                state.info.push({[keyToUpdate]: valueToUpdate});
+            }
         },
         updateQuestions(state, questions) {
-            state.questions = questions;
+            const keyToUpdate = questions[0];
+            const valueToUpdate = questions[1];
+            const indexToUpdate = state.info.findIndex(item => Object.keys(item)[0] === keyToUpdate);
+
+            if (indexToUpdate !== -1) {
+                const updatedItem = {[keyToUpdate]: valueToUpdate};
+                state.questions.splice(indexToUpdate, 1, updatedItem);
+            } else {
+                state.questions.push({[keyToUpdate]: valueToUpdate});
+            }
         },
         updateAccesses(state, accesses) {
             state.accesses = accesses;
@@ -69,13 +90,14 @@ export default {
             state.missingFields = missingFields;
         },
         clearStateTest(state) {
-            state.info = null;
+            state.info = [];
             state.questions = [];
             state.accesses = [];
+            state.missingFields = [];
         }
     },
     state: {
-        info: null,
+        info: [],
         questions: [],
         accesses: [],
         missingFields: [],

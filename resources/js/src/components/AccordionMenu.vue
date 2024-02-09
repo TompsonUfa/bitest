@@ -18,9 +18,9 @@
         </div>
         <div class="accordion-menu__content" v-if="this.selectedFilter">
             <div class="row">
-                <accordion-main-content :infoTest="this.infoTest"
+                <accordion-main-content :event="this.event" :infoTest="this.infoTest"
                                         v-if="this.selectedFilter.value === 'main'"></accordion-main-content>
-                <accordion-questions :questionsTest="this.questionsTest"
+                <accordion-questions :event="this.event" :testQuestions="this.testQuestions"
                                      v-if="this.selectedFilter.value === 'questions'"></accordion-questions>
                 <accordion-access :accessesTest="this.accessesTest"
                                   v-if="this.selectedFilter.value === 'access'"></accordion-access>
@@ -44,7 +44,12 @@ export default {
     name: "AccordionMenu",
     components: {
         AccordionAccess,
-        AccordionQuestions, AccordionMainContent, SelectImage, CustomSelect, CustomInput, UiButton
+        AccordionQuestions,
+        AccordionMainContent,
+        SelectImage,
+        CustomSelect,
+        CustomInput,
+        UiButton
     },
     data() {
         return {
@@ -55,18 +60,30 @@ export default {
                 {id: 3, name: 'Доступ', value: 'access'},
             ],
             infoTest: null,
-            questionsTest: [],
+            testQuestions: [],
             accessesTest: [],
         }
     },
     mounted() {
         this.selectedFilter = this.filters[0];
-
-        if (this.event === 'create') {
-            this.infoTest = this.cachedInfo;
-            this.questionsTest = this.cachedQuestions;
-            this.accessesTest = this.cachedAccesses;
+        if (this.test) {
+            this.infoTest = {
+                'title' : this.test.title,
+                'image' : this.test.image,
+                'timeComplete' : this.test.time_complete,
+                'attempts': this.test.attempts,
+                'limitQuestions': this.test.limit_questions,
+                'published': Boolean(this.test.published),
+            }
+            this.testQuestions = this.test.questions;
+        } else {
+            const foundItemInfo = this.cachedInfo.find(item => item[this.event]);
+            const foundItemQuestions = this.cachedQuestions.find(item => item[this.event]);
+            this.infoTest = foundItemInfo ? foundItemInfo[this.event] : null;
+            this.questionsTest = foundItemQuestions ? foundItemQuestions[this.event] : [];
         }
+
+        // this.accessesTest = this.cachedAccesses;
     },
     computed: {
         ...mapGetters(['cachedAccesses']),
@@ -74,6 +91,9 @@ export default {
         ...mapGetters(['cachedInfo']),
     },
     props: {
+        test: {
+            required: false,
+        },
         event: {
             required: true,
             type: String
@@ -83,7 +103,6 @@ export default {
         ...mapActions(['createTest']),
         handleCreateTest() {
             const response = this.createTest();
-            console.log(response);
         },
         handleUpdateTest() {
 

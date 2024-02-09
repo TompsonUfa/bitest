@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TestCreateRequest;
 use App\Services\TestService;
 use App\Http\Resources\TestResource;
+use App\Http\Resources\TestDetailResource;
 use Illuminate\Http\Request;
+use App\Models\Test;
 
 
 class TestController extends Controller
@@ -22,9 +24,9 @@ class TestController extends Controller
         return TestResource::collection($tests);
     }
 
-    public function show()
+    public function show(Test $test)
     {
-
+        return new TestDetailResource($test);
     }
 
     public function store(TestCreateRequest $request, TestService $testService)
@@ -45,4 +47,5 @@ class TestController extends Controller
     {
 
     }
+
 }

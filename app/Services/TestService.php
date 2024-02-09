@@ -6,7 +6,6 @@ use App\Models\Access;
 use App\Models\Option;
 use App\Models\Test;
 use App\Models\Question;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -17,8 +16,8 @@ class TestService
 
         $tests = Test::where('author_id', $authorId);
 
-        if(!empty($search)){
-            $tests->where('title', 'like' , $search . '%');
+        if (!empty($search)) {
+            $tests->where('title', 'like', $search . '%');
         }
 
         if ($pagination) {
@@ -28,6 +27,7 @@ class TestService
         return $tests->get();
 
     }
+
     public function createTest($info, $questions, $accesses): JsonResponse
     {
         try {
@@ -43,17 +43,16 @@ class TestService
             $test->image = $info['image'];
             $test->save();
 
-            foreach ($questions as $question){
+            foreach ($questions as $question) {
                 $questionDb = new Question;
                 $questionDb->name = $question['name'];
                 $questionDb->open = $question['typeQuestion']['value'] === 'open' ?? true;
                 $questionDb->test_id = $test->id;
                 $questionDb->save();
 
-                if ($question['typeQuestion']['value'] === 'close')
-                {
+                if ($question['typeQuestion']['value'] === 'close') {
                     $options = $question['options'];
-                    foreach ($options as $option){
+                    foreach ($options as $option) {
                         $optionDb = new Option;
                         $optionDb->name = $option['name'];
                         $optionDb->correct = $option['correct'];
@@ -64,8 +63,8 @@ class TestService
 
             }
 
-            if(!empty($accesses)){
-                foreach ($accesses as $access){
+            if (!empty($accesses)) {
+                foreach ($accesses as $access) {
                     $accessDb = new Access;
                     $accessDb->test_id = $test->id;
                     $accessDb->user_id = $access['type'] === 'users' ? $access['id'] : null;
@@ -77,11 +76,13 @@ class TestService
             DB::commit();
 
             return response()->json(['success' => true, 'message' => "test created"], 201);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
 
             return response()->json(['error' => $e->getMessage()], 500);
         }
 
     }
+
+
 }

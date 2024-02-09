@@ -8,6 +8,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('tests/created-by/{user}', [TestController::class, 'index']);
 
+    Route::get('tests/{test}', [TestController::class, 'show']);
+
     Route::post('tests', [TestController::class, 'store']);
 
 });

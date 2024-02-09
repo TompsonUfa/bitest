@@ -85,8 +85,8 @@ import {ref} from "vue";
                  label: 'Тип ответа',
                  selected: ref(null),
                  options: [
-                     {id: 1, name: "Закрытый ответ", value: "close"},
-                     {id: 2, name: "Открытый ответ", value: "open"},
+                     {id: 1, name: "Закрытый ответ", value: 0},
+                     {id: 2, name: "Открытый ответ", value: 1},
                  ]
              }
          }
@@ -109,7 +109,7 @@ import {ref} from "vue";
                 const question = {
                     id: this.questionsLength === 0 ? 1 : this.questionsLength + 1,
                     name: this.name,
-                    typeQuestion: this.typesQuestion.selected,
+                    open: this.typesQuestion.selected.value,
                     options: this.options,
                 };
                 this.$emit('add-question', question);
@@ -120,7 +120,7 @@ import {ref} from "vue";
              const question = {
                  id: this.id,
                  name: this.name,
-                 typeQuestion: this.typesQuestion.selected,
+                 open: this.typesQuestion.selected.value,
                  options: this.options,
              };
              this.$emit('edit-question', question);
@@ -141,8 +141,8 @@ import {ref} from "vue";
          isFormInvalid(){
              return (
                  !this.name ||
-                 this.typesQuestion.selected.value === "close" && this.options.some(option => !option.name)||
-                 this.typesQuestion.selected.value === "close" && !this.options.some(option => option.correct)
+                 this.typesQuestion.selected.value === 0 && this.options.some(option => !option.name)||
+                 this.typesQuestion.selected.value === 0 && !this.options.some(option => option.correct)
              );
          }
      },
@@ -150,7 +150,7 @@ import {ref} from "vue";
          selectedQuestion(newValue){
              if (newValue !== null ){
                  this.id = newValue.id;
-                 this.typesQuestion.selected = newValue.typeQuestion;
+                 this.typesQuestion.selected = this.typesQuestion.options.find(item => item.value === newValue.open);
                  this.name = newValue.name;
                  this.options = JSON.parse(JSON.stringify(newValue.options));
              } else {
