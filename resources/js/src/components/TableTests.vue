@@ -10,60 +10,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(test, index) in tests" :key="index">
-                <td>
-                    <div class="table__media media">
-                        <div class="media__img">
-                            <img :src="test.image" alt="">
-                        </div>
-                        <div class="media__text">
-                            {{ test.title }}
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <span class="badge badge-dot mr-4">
-                        <template v-if="!test.published">
-                             <i class="bg-danger"></i>
-                            Не опубликован
-                        </template>
-                        <template v-else>
-                            <i class="bg-success"></i>
-                            Опубликован
-                        </template>
-
-                    </span>
-                </td>
-                <td>
-                    <div class="d-flex gap-2 align-items-center">
-                        <span>60%</span>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                 aria-valuemax="100" style="width: 60%;"></div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="table__dropdown dropdown">
-                        <div class="dropdown__btn">
-                            <i class="bi bi-three-dots"></i>
-                        </div>
-                        <div class="dropdown__menu">
-                            <ul class="dropdown__list">
-                                <li class="dropdown__item">
-                                    <router-link class="dropdown__link" :to="{name: ''}">Изменить</router-link>
-                                </li>
-                                <li class="dropdown__item">
-                                    <router-link class="dropdown__link" :to="{name: ''}">Проверить</router-link>
-                                </li>
-                                <li class="dropdown__item">
-                                    <router-link class="dropdown__link" :to="{name: ''}">Удалить</router-link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+                <TableTestsItem :test="test" v-for="(test, index) in tests" :key="index"></TableTestsItem>
             <!--            <tr>-->
             <!--                <td>-->
             <!--                    <div class="table__media media">-->
@@ -105,6 +52,7 @@
 </template>
 
 <script>
+import TableTestsItem from "@/components/TableTestsItem.vue";
 export default {
     name: "TableTests",
     props: {
@@ -112,14 +60,17 @@ export default {
             type: Array,
             required: true,
         }
+    },
+    components: {
+        TableTestsItem
     }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .wrap-table {
-    overflow: auto;
-    max-height: 450px;
+    //overflow: auto;
+    //max-height: 450px;
     scroll-behavior: smooth;
 }
 
@@ -193,6 +144,7 @@ export default {
     position: relative;
 
     &__btn {
+        position: relative;
         width: 36px;
         height: 36px;
         cursor: pointer;
@@ -216,6 +168,28 @@ export default {
         background-color: var(--body-bg);
         overflow: hidden;
         border: 1px solid var(--border-color);
+    }
+
+    &__list {
+        list-style: none;
+        padding: 10px 12px;
+        margin: 0;
+    }
+
+    &__item {
+        color: var(--main-color);
+        text-decoration: none;
+        display: flex;
+        gap: 5px;
+        transition: all .3s ease;
+        font-size: 13px;
+        cursor: pointer;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin-bottom: 5px;
+        &:hover{
+            background-color: var(--button-bg);
+        }
     }
 
 }

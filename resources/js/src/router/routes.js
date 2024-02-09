@@ -7,8 +7,10 @@ import Profile from "@/views/Profile.vue";
 import Test from "@/views/Test.vue";
 import PreviewTest from "@/components/PreviewTest.vue";
 import PassTest from "@/components/PassTest.vue";
-import CreatedTest from "@/views/CreatedTest.vue";
-import CreateTest from "@/views/CreateTest.vue";
+
+import CreatedTestView from "@/views/Test/indexView.vue";
+import CreateTestView from "@/views/Test/CreateView.vue";
+import EditTestView from "@/views/Test/EditView.vue";
 
 const routes = [
     {
@@ -53,19 +55,24 @@ const routes = [
                 path: '/created-tests',
                 component: CreatedTestLayout,
                 redirect: {name: 'created-tests'},
-                name: 'created',
+                name: 'created-tests',
                 meta: {breadcrumb: 'Мои тесты'},
                 children: [
                     {
                         path: '',
-                        component: CreatedTest,
+                        component: CreatedTestView,
                         name: 'created-tests',
                     },
                     {
                         path: 'create',
-                        component: CreateTest,
-                        name: 'create',
+                        component: CreateTestView,
+                        name: 'create-test',
                         meta: {breadcrumb: 'Создать'},
+                    },
+                    {
+                        path: ':id/edit',
+                        component: EditTestView,
+                        name: 'edit-test',
                     }
                 ]
             },

@@ -7,15 +7,23 @@
                                class="accordion-menu__btn" v-for="filter in filters" :key="filter.id"
                                @click="this.selectedFilter = filter">{{ filter.name }}
                     </ui-button>
-                    <ui-button @click="handleCreateTest">Создать тест</ui-button>
+                    <ui-button v-if="this.event === 'create'" @click="handleCreateTest">
+                        Создать тест
+                    </ui-button>
+                    <ui-button v-else @click="handleUpdateTest">
+                        Изменить тест
+                    </ui-button>
                 </div>
             </div>
         </div>
         <div class="accordion-menu__content" v-if="this.selectedFilter">
             <div class="row">
-                <accordion-main-content v-if="this.selectedFilter.value === 'main'"></accordion-main-content>
-                <accordion-questions v-if="this.selectedFilter.value === 'questions'"></accordion-questions>
-                <accordion-access v-if="this.selectedFilter.value === 'access'"></accordion-access>
+                <accordion-main-content :infoTest="this.infoTest"
+                                        v-if="this.selectedFilter.value === 'main'"></accordion-main-content>
+                <accordion-questions :questionsTest="this.questionsTest"
+                                     v-if="this.selectedFilter.value === 'questions'"></accordion-questions>
+                <accordion-access :accessesTest="this.accessesTest"
+                                  v-if="this.selectedFilter.value === 'access'"></accordion-access>
             </div>
         </div>
     </div>
@@ -30,7 +38,7 @@ import SelectImage from "@/components/UI/SelectImage.vue";
 import AccordionMainContent from "@/components/AccordionMainContent.vue";
 import AccordionQuestions from "@/components/AccordionQuestions.vue";
 import AccordionAccess from "@/components/AccordionAccess.vue";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "AccordionMenu",
@@ -46,18 +54,40 @@ export default {
                 {id: 2, name: 'Вопросы', value: 'questions'},
                 {id: 3, name: 'Доступ', value: 'access'},
             ],
+            infoTest: null,
+            questionsTest: [],
+            accessesTest: [],
         }
     },
     mounted() {
         this.selectedFilter = this.filters[0];
+
+        if (this.event === 'create') {
+            this.infoTest = this.cachedInfo;
+            this.questionsTest = this.cachedQuestions;
+            this.accessesTest = this.cachedAccesses;
+        }
+    },
+    computed: {
+        ...mapGetters(['cachedAccesses']),
+        ...mapGetters(['cachedQuestions']),
+        ...mapGetters(['cachedInfo']),
+    },
+    props: {
+        event: {
+            required: true,
+            type: String
+        }
     },
     methods: {
         ...mapActions(['createTest']),
         handleCreateTest() {
             const response = this.createTest();
             console.log(response);
-        }
+        },
+        handleUpdateTest() {
 
+        }
     }
 }
 </script>

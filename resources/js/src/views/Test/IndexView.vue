@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="col-12">
-            <router-link class="btn btn-primary" to="/created-tests/create">Создать</router-link>
+            <router-link class="btn btn-primary" :to="{name: 'create-test'}">Создать</router-link>
         </div>
     </div>
 </template>
@@ -55,7 +55,7 @@ import axios from "axios";
 import {mapGetters} from "vuex";
 
 export default {
-    name: "CreatedTest",
+    name: "IndexView",
     components: {
         UiButton,
         TableTests

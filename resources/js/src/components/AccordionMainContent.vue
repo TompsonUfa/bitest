@@ -86,15 +86,15 @@ export default {
         }
     },
     mounted() {
-        if (this.cachedInfo) {
-            this.form.title = this.cachedInfo.title;
-            this.form.image = this.cachedInfo.image;
-            this.form.timeComplete.selected = this.cachedInfo.timeComplete;
-            this.form.attempts.selected = this.cachedInfo.attempts;
-            this.form.limitQuestions.selected = this.cachedInfo.limitQuestions;
-            this.form.published = this.cachedInfo.published;
+        if (this.infoTest) {
+            this.form.title = this.infoTest.title;
+            this.form.image = this.infoTest.image;
+            this.form.timeComplete.selected = this.infoTest.timeComplete;
+            this.form.attempts.selected = this.infoTest.attempts;
+            this.form.limitQuestions.selected = this.infoTest.limitQuestions;
+            this.form.published = this.infoTest.published;
         }
-        ;
+
         this.dataLoaded = true
     },
     watch: {
@@ -119,8 +119,10 @@ export default {
     methods: {
         ...mapActions(['updateInfo']),
     },
-    computed: {
-        ...mapGetters(['cachedInfo']),
+    props: {
+        infoTest: {
+            required: true,
+        }
     }
 }
 </script>

@@ -33,9 +33,14 @@
                 questions:ref([]),
             }
         },
+        props: {
+            questionsTest: {
+                required: true,
+            }
+        },
         mounted() {
             this.dataLoaded = true;
-            this.questions = this.cachedQuestions;
+            this.questions = this.questionsTest;
         },
         methods: {
             ...mapActions(['updateQuestions']),
@@ -67,9 +72,6 @@
                 },
             }
         },
-        computed: {
-            ...mapGetters(['cachedQuestions']),
-        }
     }
 </script>
 

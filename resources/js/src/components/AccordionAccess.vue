@@ -44,9 +44,14 @@
              }
          }
      },
+     props: {
+         accessesTest: {
+             required: true,
+         }
+     },
      mounted() {
          this.dataLoaded = true;
-         this.accesses = this.cachedAccesses;
+         this.accesses = this.accessesTest;
      },
      watch: {
          accesses:{
@@ -57,9 +62,6 @@
                  }
              },
          }
-     },
-     computed: {
-         ...mapGetters(['cachedAccesses']),
      },
      methods: {
          ...mapActions(['updateAccesses']),
