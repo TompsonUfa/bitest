@@ -4,13 +4,13 @@ import vue from '@vitejs/plugin-vue';
 import path from 'path';
 
 export default defineConfig({
-    server: {
-        host: '0.0.0.0',
-        hmr: {
-            clientPort: 5173,
-            host: 'localhost',
-        }
-    },
+    // server: {
+    //     host: '0.0.0.0',
+    //     hmr: {
+    //         clientPort: 5173,
+    //         host: 'localhost',
+    //     }
+    // },
     plugins: [
         vue(),
         laravel({

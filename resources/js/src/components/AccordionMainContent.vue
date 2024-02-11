@@ -39,7 +39,7 @@ import CustomInput from "@/components/UI/CustomInput.vue";
 import SelectImage from "@/components/UI/SelectImage.vue";
 import CustomSelect from "@/components/UI/CustomSelect.vue";
 import {ref} from "vue";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "AccordionMainContent",
@@ -86,38 +86,56 @@ export default {
         }
     },
     mounted() {
-        if(this.infoTest){
-            this.form.title = this.infoTest.title;
-            this.form.image = this.infoTest.image;
-            this.form.timeComplete.selected = this.form.timeComplete.options.find(item => item.value === this.infoTest.timeComplete);
-            this.form.attempts.selected = this.form.attempts.options.find(item => item.value === this.infoTest.attempts);
-            this.form.limitQuestions.selected = this.form.limitQuestions.options.find(item => item.value === this.infoTest.limitQuestions);
-            this.form.published = this.infoTest.published;
+        let foundItemInfo = this.cachedInfo.find(item => item[this.event]);
+        if (foundItemInfo) {
+            this.form.title = foundItemInfo[this.event].title;
+            this.form.image = foundItemInfo[this.event].image;
+            this.form.timeComplete.selected = foundItemInfo[this.event].timeComplete;
+            this.form.attempts.selected = foundItemInfo[this.event].attempts;
+            this.form.limitQuestions.selected = foundItemInfo[this.event].limitQuestions;
+            this.form.published = foundItemInfo[this.event].published;
+        } else {
+            if (this.infoTest) {
+                this.form.title = this.infoTest.title;
+                this.form.image = this.infoTest.image;
+                this.form.timeComplete.selected = this.form.timeComplete.options.find(item => item.value === this.infoTest.timeComplete);
+                this.form.attempts.selected = this.form.attempts.options.find(item => item.value === this.infoTest.attempts);
+                this.form.limitQuestions.selected = this.form.limitQuestions.options.find(item => item.value === this.infoTest.limitQuestions);
+                this.form.published = this.infoTest.published;
+            }
         }
+        this.dataLoaded = true;
+        // let foundItemQuestions = this.cachedQuestions.find(item => item[this.event])
+        // this.testQuestions = foundItemQuestions ? foundItemQuestions[this.event] : [];
     },
     watch: {
         form: {
             deep: true,
             handler(newForm, oldForm) {
-                const info = {
-                    title: newForm.title,
-                    image: newForm.image,
-                    timeComplete: newForm.timeComplete.selected.value,
-                    attempts: newForm.attempts.selected.value,
-                    limitQuestions: newForm.limitQuestions.selected.value,
-                    published: newForm.published,
-                }
+                if (this.dataLoaded) {
+                    const info = {
+                        title: newForm.title,
+                        image: newForm.image,
+                        timeComplete: newForm.timeComplete.selected,
+                        attempts: newForm.attempts.selected,
+                        limitQuestions: newForm.limitQuestions.selected,
+                        published: newForm.published,
+                    }
 
-                this.updateInfo([this.event, info]);
+                    this.updateInfo([this.event, info]);
+                }
             },
         },
+    },
+    computed: {
+        ...mapGetters(['cachedAccesses', 'cachedQuestions', 'cachedInfo']),
     },
     methods: {
         ...mapActions(['updateInfo']),
     },
     props: {
         infoTest: {
-            required: true,
+            required: false,
         },
         event: {
             required: true,

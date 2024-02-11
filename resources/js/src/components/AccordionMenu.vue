@@ -68,6 +68,7 @@ export default {
         this.selectedFilter = this.filters[0];
         if (this.test) {
             this.infoTest = {
+                'id': this.test.id,
                 'title' : this.test.title,
                 'image' : this.test.image,
                 'timeComplete' : this.test.time_complete,
@@ -76,19 +77,7 @@ export default {
                 'published': Boolean(this.test.published),
             }
             this.testQuestions = this.test.questions;
-        } else {
-            const foundItemInfo = this.cachedInfo.find(item => item[this.event]);
-            const foundItemQuestions = this.cachedQuestions.find(item => item[this.event]);
-            this.infoTest = foundItemInfo ? foundItemInfo[this.event] : null;
-            this.questionsTest = foundItemQuestions ? foundItemQuestions[this.event] : [];
         }
-
-        // this.accessesTest = this.cachedAccesses;
-    },
-    computed: {
-        ...mapGetters(['cachedAccesses']),
-        ...mapGetters(['cachedQuestions']),
-        ...mapGetters(['cachedInfo']),
     },
     props: {
         test: {
