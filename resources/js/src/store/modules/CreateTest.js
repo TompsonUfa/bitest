@@ -62,58 +62,56 @@ export default {
         updateInfo(state, info) {
             const keyToUpdate = info[0];
             const valueToUpdate = info[1];
-            const indexToUpdate = state.info.findIndex(item => Object.keys(item)[0] === keyToUpdate);
+            const indexToUpdate = state.test.findIndex(item => Object.keys(item)[0] === keyToUpdate
+                || Object.keys(item)[0] === keyToUpdate
+                && Object.values(item)[0].id === valueToUpdate.id);
 
             if (indexToUpdate !== -1) {
+                const existingItem = state.test[indexToUpdate][keyToUpdate];
                 const updatedItem = {[keyToUpdate]: valueToUpdate};
-                state.info.splice(indexToUpdate, 1, updatedItem);
+
+                if (existingItem.questions) {
+                    updatedItem[keyToUpdate].questions = existingItem.questions;
+                }
+
+                state.test.splice(indexToUpdate, 1, updatedItem);
             } else {
-                state.info.push({[keyToUpdate]: valueToUpdate});
+                state.test.push({[keyToUpdate]: valueToUpdate});
             }
         },
-        updateQuestions(state, questions) {
-            const keyToUpdate = questions[0];
-            const valueToUpdate = questions[1];
-            const indexToUpdate = state.info.findIndex(item => Object.keys(item)[0] === keyToUpdate);
+        updateQuestions(state, data) {
+            const keyToUpdate = data[0];
+            const valueToUpdate = data[1];
+            const testId = data[2];
+            const indexToUpdate = state.test.findIndex(item => Object.keys(item)[0] === keyToUpdate
+                || Object.keys(item)[0] === keyToUpdate
+                && Object.values(item)[0].id === testId);
 
             if (indexToUpdate !== -1) {
-                const updatedItem = {[keyToUpdate]: valueToUpdate};
-                state.questions.splice(indexToUpdate, 1, updatedItem);
-            } else {
-                state.questions.push({[keyToUpdate]: valueToUpdate});
+                state.test[indexToUpdate][keyToUpdate].questions = valueToUpdate;
             }
         },
         updateAccesses(state, accesses) {
-            state.accesses = accesses;
+            // state.accesses = accesses;
         },
         setMissingFields(state, missingFields) {
             state.missingFields = missingFields;
         },
         clearStateTest(state) {
-            state.info = [];
-            state.questions = [];
-            state.accesses = [];
+            state.test = [];
             state.missingFields = [];
         }
     },
     state: {
-        info: [],
-        questions: [],
-        accesses: [],
         missingFields: [],
+        test: [],
     },
     getters: {
-        cachedAccesses(state) {
-            return state.accesses;
-        },
-        cachedInfo(state) {
-            return state.info
-        },
-        cachedQuestions(state) {
-            return state.questions
-        },
         missingFields(state) {
             return state.missingFields;
         },
+        cachedTest(state) {
+            return state.test;
+        }
     }
 }

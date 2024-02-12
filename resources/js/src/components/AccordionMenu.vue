@@ -18,9 +18,9 @@
         </div>
         <div class="accordion-menu__content" v-if="this.selectedFilter">
             <div class="row">
-                <accordion-main-content :event="this.event" :infoTest="this.infoTest"
+                <accordion-main-content :event="this.event" :testMainInfo="this.testMainInfo"
                                         v-if="this.selectedFilter.value === 'main'"></accordion-main-content>
-                <accordion-questions :event="this.event" :testQuestions="this.testQuestions"
+                <accordion-questions :testId="this.test?.id" :event="this.event" :testQuestions="this.testQuestions"
                                      v-if="this.selectedFilter.value === 'questions'"></accordion-questions>
                 <accordion-access :accessesTest="this.accessesTest"
                                   v-if="this.selectedFilter.value === 'access'"></accordion-access>
@@ -59,25 +59,15 @@ export default {
                 {id: 2, name: 'Вопросы', value: 'questions'},
                 {id: 3, name: 'Доступ', value: 'access'},
             ],
-            infoTest: null,
+            testMainInfo: null,
             testQuestions: [],
             accessesTest: [],
+            dataLoad: false,
         }
     },
     mounted() {
         this.selectedFilter = this.filters[0];
-        if (this.test) {
-            this.infoTest = {
-                'id': this.test.id,
-                'title' : this.test.title,
-                'image' : this.test.image,
-                'timeComplete' : this.test.time_complete,
-                'attempts': this.test.attempts,
-                'limitQuestions': this.test.limit_questions,
-                'published': Boolean(this.test.published),
-            }
-            this.testQuestions = this.test.questions;
-        }
+        this.getTest();
     },
     props: {
         test: {
@@ -95,8 +85,22 @@ export default {
         },
         handleUpdateTest() {
 
+        },
+        getTest() {
+            if (this.test){
+                this.testMainInfo = {
+                    id: this.test.id,
+                    title: this.test.title,
+                    image: this.test.image,
+                    time_complete: this.test.time_complete,
+                    attempts: this.test.attempts ,
+                    limit_questions: this.test.limit_questions,
+                    published: this.test.published,
+                };
+                this.testQuestions = this.test.questions ?? [];
+            }
         }
-    }
+    },
 }
 </script>
 

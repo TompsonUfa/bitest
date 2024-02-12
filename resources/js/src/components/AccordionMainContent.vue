@@ -48,7 +48,8 @@ export default {
         return {
             dataLoaded: false,
             form: {
-                title: '',
+                id: null,
+                title: ref(''),
                 image: '',
                 published: false,
                 timeComplete: {
@@ -85,57 +86,61 @@ export default {
             },
         }
     },
+    computed: {
+        ...mapGetters(['cachedTest'])
+    },
     mounted() {
-        let foundItemInfo = this.cachedInfo.find(item => item[this.event]);
-        if (foundItemInfo) {
-            this.form.title = foundItemInfo[this.event].title;
-            this.form.image = foundItemInfo[this.event].image;
-            this.form.timeComplete.selected = foundItemInfo[this.event].timeComplete;
-            this.form.attempts.selected = foundItemInfo[this.event].attempts;
-            this.form.limitQuestions.selected = foundItemInfo[this.event].limitQuestions;
-            this.form.published = foundItemInfo[this.event].published;
-        } else {
-            if (this.infoTest) {
-                this.form.title = this.infoTest.title;
-                this.form.image = this.infoTest.image;
-                this.form.timeComplete.selected = this.form.timeComplete.options.find(item => item.value === this.infoTest.timeComplete);
-                this.form.attempts.selected = this.form.attempts.options.find(item => item.value === this.infoTest.attempts);
-                this.form.limitQuestions.selected = this.form.limitQuestions.options.find(item => item.value === this.infoTest.limitQuestions);
-                this.form.published = this.infoTest.published;
+        let testInfo = this.testMainInfo;
+        const cachedTest = this.cachedTest.find(item => {
+            if (item[this.event] && this.testMainInfo === null) {
+                return item[this.event];
             }
+            if (item[this.event] && item[this.event].id === this.testMainInfo.id) {
+                return item[this.event];
+            }
+        })
+        testInfo = cachedTest ? cachedTest[this.event] : testInfo;
+
+        if (testInfo !== null) {
+            this.form.id = testInfo.id;
+            this.form.title = testInfo.title;
+            this.form.image = testInfo.image;
+            this.form.timeComplete.selected = this.form.timeComplete.options.find(item => item.value === testInfo.time_complete);
+            this.form.attempts.selected = this.form.attempts.options.find(item => item.value === testInfo.attempts);
+            this.form.limitQuestions.selected = this.form.limitQuestions.options.find(item => item.value === testInfo.limit_questions);
+            this.form.published = testInfo.published;
         }
+
         this.dataLoaded = true;
-        // let foundItemQuestions = this.cachedQuestions.find(item => item[this.event])
-        // this.testQuestions = foundItemQuestions ? foundItemQuestions[this.event] : [];
     },
     watch: {
         form: {
             deep: true,
             handler(newForm, oldForm) {
                 if (this.dataLoaded) {
-                    const info = {
-                        title: newForm.title,
-                        image: newForm.image,
-                        timeComplete: newForm.timeComplete.selected,
-                        attempts: newForm.attempts.selected,
-                        limitQuestions: newForm.limitQuestions.selected,
-                        published: newForm.published,
-                    }
-
-                    this.updateInfo([this.event, info]);
+                    this.updateCache(newForm);
                 }
             },
         },
     },
-    computed: {
-        ...mapGetters(['cachedAccesses', 'cachedQuestions', 'cachedInfo']),
-    },
     methods: {
         ...mapActions(['updateInfo']),
+        updateCache(data) {
+            const info = {
+                id: data.id,
+                title: data.title,
+                image: data.image,
+                time_complete: data.timeComplete.selected.value,
+                attempts: data.attempts.selected.value,
+                limit_questions: data.limitQuestions.selected.value,
+                published: data.published,
+            }
+            this.updateInfo([this.event, info]);
+        },
     },
     props: {
-        infoTest: {
-            required: false,
+        testMainInfo: {
+            required: true,
         },
         event: {
             required: true,
