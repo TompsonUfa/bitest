@@ -79,12 +79,12 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['createTest']),
+        ...mapActions(['createTest', 'updateTest']),
         handleCreateTest() {
             const response = this.createTest();
         },
         handleUpdateTest() {
-
+            const response = this.updateTest(this.test.id);
         },
         getTest() {
             if (this.test){

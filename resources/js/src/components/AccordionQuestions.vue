@@ -1,5 +1,5 @@
 <template>
-    <div v-if="questions.length > 0" class="col-12 mb-3">
+    <div v-if="dataLoad && questions.length > 0" class="col-12 mb-3">
         <div class="d-flex gap-2 align-items-center">
             <QuestionSwitcher @select-question="(item) => selectedQuestion = item"
                               :selectedQuestion="selectedQuestion"
@@ -7,8 +7,9 @@
             </QuestionSwitcher>
         </div>
     </div>
-    <div class="col-12">
-        <QuestionCreationForm :questionsLength="questions.length" :selectedQuestion="selectedQuestion"
+    <div class="col-12" v-if="dataLoad">
+        <QuestionCreationForm :questionsId="this.questions.map(question => question.id)"
+                              :selectedQuestion="selectedQuestion"
                               @add-question="addQuestion"
                               @edit-question="editQuestion"
                               @delete-question="deleteQuestion">
@@ -58,10 +59,11 @@ export default {
                 return item[this.event];
             }
         })
-        console.log(!this.testId)
+
         questions = cachedTest ? cachedTest[this.event].questions : questions
 
         this.questions = questions ?? [];
+        this.dataLoad = true;
     },
 
     methods: {

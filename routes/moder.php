@@ -10,7 +10,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('tests/{test}', [TestController::class, 'show']);
 
+    Route::post('tests/{test}', [TestController::class, 'update']);
+
     Route::post('tests', [TestController::class, 'store']);
+
 
 });
 

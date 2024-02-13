@@ -11,7 +11,7 @@
             </thead>
             <tbody>
                 <TableTestsItem :test="test" v-for="(test, index) in tests" :key="index"></TableTestsItem>
-                <ui-button @click="this.clearStateTest()">Очистить кэш</ui-button>
+                <ui-button @click="this.clearAllTest()">Очистить кэш</ui-button>
 
 
                 <!--                    <div class="d-flex gap-2 align-items-center">-->
@@ -42,7 +42,7 @@ export default {
         TableTestsItem
     },
     methods: {
-        ...mapActions(['clearStateTest'])
+        ...mapActions(['clearAllTest'])
     }
 }
 </script>

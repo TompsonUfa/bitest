@@ -11,58 +11,111 @@ export default {
         updateAccesses(ctx, accesses) {
             ctx.commit('updateAccesses', accesses)
         },
-        clearStateTest(ctx) {
-            ctx.commit('clearStateTest', '');
+        clearAllTest(ctx) {
+            ctx.commit('clearAllTest', '');
         },
-        createTest(ctx) {
-            const info = ctx.getters.cachedInfo;
-            const questions = ctx.getters.cachedQuestions;
-            const accesses = ctx.getters.cachedAccesses;
-            const userId = ctx.getters.user.id;
+        validatedForm(ctx, data) {
             const missingFields = [];
 
-            if (!info || !info.title) {
+            if (!data[0].title) {
                 missingFields.push("Заполните название теста");
             }
 
-            if (questions.length === 0) {
+            if (!data[0].image) {
+                missingFields.push("Необходимо выбрать картинку для теста");
+            }
+
+            if (data[1] === 'create' && !data[0].questions ||data[1] === 'create' && data[0].questions.length === 0) {
                 missingFields.push("Заполните вопросы для теста");
             }
 
             if (missingFields.length > 0) {
                 ctx.commit("setMissingFields", missingFields);
-                return {success: false, message: "Не все поля заполнены"};
+                return false;
+            } else {
+                return true;
             }
+        },
+        createTest(ctx) {
+            let info = ctx.getters.cachedTest.find(item => {
+                if (item.create) {
+                    return item.create
+                }
+            });
+            info = info.create;
 
-            const test = {
-                title: info.title,
-                image: info.image,
-                timeComplete: info.timeComplete,
-                attempts: info.attempts,
-                limitQuestions: info.limitQuestions,
-                published: info.published,
-                userId: userId,
-            };
+            const userId = ctx.getters.user.id;
 
-            axios.post('/api/moder/tests',
-                {
-                    'info': test,
-                    'questions': questions,
-                    'accesses': accesses
-                }).then((res) => {
-                ctx.commit("setMissingFields", null);
-                ctx.commit("clearStateTest");
-                router.push({name: 'created-tests'});
-            }).catch((err) => {
-                console.log(err)
-            })
+            ctx.dispatch('validatedForm', [info, 'create'])
+                .then((result) => {
+                    if (result) {
+                        const test = {
+                            title: info.title,
+                            image: info.image,
+                            timeComplete: info.time_complete,
+                            attempts: info.attempts,
+                            limitQuestions: info.limit_questions,
+                            published: info.published,
+                            userId: userId,
+                        };
+                        axios.post('/api/moder/tests',
+                            {
+                                'info': test,
+                                'questions': info.questions,
+                            })
+                            .then((res) => {
+                                ctx.commit("setMissingFields", null);
+                                ctx.commit("clearStateTest", info.id);
+                                router.push({name: 'created-tests'});
+                                console.log( ctx.getters.cachedTest)
+                            }).catch((err) => {
+                            console.log(err)
+                        })
+                    }
+                });
+        },
+        updateTest(ctx, testId) {
+            let info = ctx.getters.cachedTest.find(item => {
+                return Object.values(item)[0].id === testId;
+            });
+
+            info = info.edit;
+
+            ctx.dispatch('validatedForm', [info, 'edit'])
+                .then((result) => {
+                    if (result) {
+                        const test = {
+                            title: info.title,
+                            image: info.image,
+                            timeComplete: info.time_complete,
+                            attempts: info.attempts,
+                            limitQuestions: info.limit_questions,
+                            published: info.published,
+                        };
+                        axios.post(`/api/moder/tests/${testId}`,
+                            {
+                                'info': test,
+                                'questions': info?.questions,
+                            })
+                            .then((res) => {
+                                ctx.commit("setMissingFields", null);
+                                ctx.commit("clearStateTest", testId);
+                                router.push({name: 'created-tests'});
+                                console.log( ctx.getters.cachedTest)
+                            }).catch((err) => {
+                            console.log(err)
+                        })
+                    }
+                });
+
         }
     },
     mutations: {
         updateInfo(state, info) {
             const keyToUpdate = info[0];
             const valueToUpdate = info[1];
-            const indexToUpdate = state.test.findIndex(item => Object.keys(item)[0] === keyToUpdate
+            const indexToUpdate = state.test.findIndex(item =>
+                Object.keys(item)[0] === keyToUpdate && !Object.values(item)[0].id
                 || Object.keys(item)[0] === keyToUpdate
                 && Object.values(item)[0].id === valueToUpdate.id);
 
@@ -78,12 +131,14 @@ export default {
             } else {
                 state.test.push({[keyToUpdate]: valueToUpdate});
             }
+
         },
         updateQuestions(state, data) {
             const keyToUpdate = data[0];
             const valueToUpdate = data[1];
             const testId = data[2];
-            const indexToUpdate = state.test.findIndex(item => Object.keys(item)[0] === keyToUpdate
+            const indexToUpdate = state.test.findIndex(item =>
+                Object.keys(item)[0] === keyToUpdate && !Object.values(item)[0].id
                 || Object.keys(item)[0] === keyToUpdate
                 && Object.values(item)[0].id === testId);
 
@@ -97,9 +152,17 @@ export default {
         setMissingFields(state, missingFields) {
             state.missingFields = missingFields;
         },
-        clearStateTest(state) {
-            state.test = [];
+        clearStateTest(state, testId) {
+            let indexToRemove = state.test.findIndex(item => {
+                return Object.values(item)[0].id === testId;
+            });
+            if (indexToRemove !== -1) {
+                state.test.splice(indexToRemove, 1);
+            }
             state.missingFields = [];
+        },
+        clearAllTest(state){
+            state.test = [];
         }
     },
     state: {

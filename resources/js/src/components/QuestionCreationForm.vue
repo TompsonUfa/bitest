@@ -29,7 +29,7 @@
                                    @select-item="(item) => {this.typesQuestion.selected = item;}">
                     </custom-select>
                 </div>
-                <div v-if="typesQuestion.selected?.value !== 'open'">
+                <div v-if="typesQuestion.selected?.value !== 1">
                     <label class="form-label">Варианты ответов</label>
                     <div class="create-question__options options">
                         <div v-for="(option, index) in options" :key="index" class="options__item">
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-between">
-                <ui-button v-if="typesQuestion.selected?.value === 'close'" @click="addOption">
+                <ui-button v-if="typesQuestion.selected?.value === 0" @click="addOption">
                     Добавить вариант
                 </ui-button>
                 <ui-button v-if="selectedQuestion" :class="{'ui-button_disabled' : isFormInvalid}" @click="editQuestion">
@@ -70,9 +70,8 @@ import {ref} from "vue";
              type: Object,
              default: null,
          },
-         questionsLength: {
-             type: Number,
-             default: 0,
+         questionsId: {
+            type: Array,
          }
      },
      data(){
@@ -80,7 +79,7 @@ import {ref} from "vue";
              id: ref(null),
              img: false,
              name: ref(null),
-             options: [{name: '', correct: true},{name: '', correct: false}],
+             options: [{id: 1, name: '', correct: true},{id: 2, name: '', correct: false}],
              typesQuestion: {
                  label: 'Тип ответа',
                  selected: ref(null),
@@ -92,8 +91,17 @@ import {ref} from "vue";
          }
      },
      methods: {
+         findFirstAvailableId(ids) {
+             let id = 1;
+             while (ids.includes(id)) {
+                 id++;
+             }
+             return id;
+         },
          addOption(){
+             const optionsId = this.options.map(option => option.id)
              const newOption = {
+                 id: this.options.length === 0 ? 1: this.findFirstAvailableId(optionsId),
                  name: '',
                  correct: false,
              }
@@ -106,8 +114,9 @@ import {ref} from "vue";
          },
          addQuestion(){
             if (!this.isFormInvalid){
+                const newId = this.findFirstAvailableId(this.questionsId);
                 const question = {
-                    id: this.questionsLength === 0 ? 1 : this.questionsLength + 1,
+                    id: this.questionsId.length === 0 ? 1 : newId,
                     name: this.name,
                     open: this.typesQuestion.selected.value,
                     options: this.options,

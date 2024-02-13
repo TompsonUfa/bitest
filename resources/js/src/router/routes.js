@@ -55,7 +55,6 @@ const routes = [
                 path: '/created-tests',
                 component: CreatedTestLayout,
                 redirect: {name: 'created-tests'},
-                name: 'created-tests',
                 meta: {breadcrumb: 'Мои тесты'},
                 children: [
                     {

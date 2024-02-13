@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Moder;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TestCreateRequest;
+use App\Http\Requests\TestEditRequest;
 use App\Services\TestService;
 use App\Http\Resources\TestResource;
 use App\Http\Resources\TestDetailResource;
@@ -38,9 +39,12 @@ class TestController extends Controller
         return $testService->createTest($mainInfo, $questions, $accesses);
     }
 
-    public function update()
+    public function update(Test $test, TestEditRequest $request , TestService $testService)
     {
+        $mainInfo = $request->input('info');
+        $questions = $request->input('questions');
 
+        return $testService->editTest($test, $mainInfo, $questions);
     }
 
     public function destroy()
