@@ -40,13 +40,13 @@
                     <ul class="dropdown__list">
                         <li class="dropdown__item"
                             @click.prevent="
-                            this.$router.push({name: 'edit-test' , params: {'id': test.id } })">
+                            this.$router.push({name: 'edit-test' , params: {'id': this.test.id } })">
                             Изменить
                         </li>
                         <li class="dropdown__item" @click.prevent="this.$router.push({name: 'home'})">
                             Проверить
                         </li>
-                        <li class="dropdown__item" @click.prevent="this.$router.push({name: 'home'})">
+                        <li class="dropdown__item" @click.prevent="this.$emit('delete-test', this.test.id)">
                             Удалить
                         </li>
                     </ul>
@@ -68,7 +68,8 @@ export default {
         return {
             showMenu: false,
         }
-    }
+    },
+    emits: ['delete-test'],
 }
 </script>
 

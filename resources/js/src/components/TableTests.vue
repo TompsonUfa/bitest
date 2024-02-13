@@ -10,8 +10,8 @@
             </tr>
             </thead>
             <tbody>
-                <TableTestsItem :test="test" v-for="(test, index) in tests" :key="index"></TableTestsItem>
-                <ui-button @click="this.clearAllTest()">Очистить кэш</ui-button>
+                <TableTestsItem @delete-test="testId => this.$emit('delete-test', testId)" :test="test" v-for="(test, index) in tests" :key="index"></TableTestsItem>
+<!--                <ui-button @click="this.clearAllTest()">Очистить кэш</ui-button>-->
 
 
                 <!--                    <div class="d-flex gap-2 align-items-center">-->
@@ -43,7 +43,8 @@ export default {
     },
     methods: {
         ...mapActions(['clearAllTest'])
-    }
+    },
+    emits: ['delete-test'],
 }
 </script>
 

@@ -1,4 +1,5 @@
 import router from "../../router/router.js";
+import axios from "axios";
 
 export default {
     actions: {
@@ -11,8 +12,8 @@ export default {
         updateAccesses(ctx, accesses) {
             ctx.commit('updateAccesses', accesses)
         },
-        clearAllTest(ctx) {
-            ctx.commit('clearAllTest', '');
+        clearStateTest(ctx) {
+            ctx.commit('clearStateTest', '');
         },
         validatedForm(ctx, data) {
             const missingFields = [];
@@ -108,7 +109,7 @@ export default {
                     }
                 });
 
-        }
+        },
     },
     mutations: {
         updateInfo(state, info) {

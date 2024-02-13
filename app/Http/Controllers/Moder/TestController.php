@@ -47,9 +47,11 @@ class TestController extends Controller
         return $testService->editTest($test, $mainInfo, $questions);
     }
 
-    public function destroy()
+    public function destroy(Test $test)
     {
+        $test->delete();
 
+        return response()->json('',204);
     }
 
 }

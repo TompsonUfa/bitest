@@ -8,7 +8,7 @@
             </form>
         </div>
         <div class="col-12 mb-3">
-            <table-tests v-if="this.tests.length > 0" :tests="this.tests"></table-tests>
+            <table-tests @delete-test="testId => deleteTest(testId)" v-if="this.tests.length > 0" :tests="this.tests"></table-tests>
         </div>
         <div class="row mb-3">
             <div class="col-12">
@@ -52,7 +52,7 @@
 import TableTests from "@/components/TableTests.vue";
 import UiButton from "@/components/UI/UiButton.vue";
 import axios from "axios";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "IndexView",
@@ -74,6 +74,7 @@ export default {
         this.getData();
     },
     methods: {
+        ...mapActions(['clearStateTest']),
         getData(page = 1) {
             axios.get(`/api/moder/tests/created-by/${this.user.id}`, {
                 params: {
@@ -89,8 +90,17 @@ export default {
                 .catch(err => {
                     console.log(err)
                 })
+        },
+        deleteTest(testId){
+            axios.delete(`/api/moder/tests/${testId}`)
+                .then(res => {
+                    this.clearStateTest(testId);
+                    this.getData();
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
-
     },
 
 }
