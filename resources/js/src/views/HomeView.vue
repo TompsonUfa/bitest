@@ -24,7 +24,7 @@ import CardList from "@/components/CardList.vue";
 import axios from "axios";
 
 export default {
-    name: "Home",
+    name: "HomeView",
     components: {
         CardList,
         filterNav,
@@ -33,17 +33,24 @@ export default {
     data() {
         return {
             tests: [],
+            search: '',
         }
     },
-    mounted() {
-        axios.get('/api/tests').then((res) => {
-            this.tests = res.data.tests.data;
+    mounted(page = 1) {
+        axios.get('/api/tests', {
+            params: {
+                'page': page,
+                'per_page': 10,
+                'search': this.search,
+            }
+        }).then((res) => {
+            this.tests = res.data.data;
         })
     }
 }
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .load-more {
     color: var(--main-color);
     font-weight: 600;

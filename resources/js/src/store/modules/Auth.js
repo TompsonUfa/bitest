@@ -4,31 +4,34 @@ export default {
     actions: {
         checkAuth(ctx) {
             return axios.get('/api/user')
+                .then(res => {
+                    ctx.commit('setUser', res.data)
+                    ctx.commit('setAuthenticated', true)
+                })
                 .catch(err => {
                     ctx.dispatch('logout');
                 });
         },
         login(ctx) {
             return axios.get('/api/user').then(res => {
-                ctx.commit('SET_USER', res.data)
-                ctx.commit('SET_AUTHENTICATED', true)
+                ctx.commit('setUser', res.data)
+                ctx.commit('setAuthenticated', true)
                 router.push({name: 'home'})
             }).catch(err => {
                 ctx.dispatch('logout');
             })
         },
         logout(ctx) {
-            ctx.commit('SET_USER', {})
-            ctx.commit('SET_AUTHENTICATED', false)
-
+            ctx.commit('setUser', {})
+            ctx.commit('setAuthenticated', false)
             axios.post('/logout')
         }
     },
     mutations: {
-        SET_AUTHENTICATED(state, value) {
+        setAuthenticated(state, value) {
             state.authenticated = value
         },
-        SET_USER(state, value) {
+        setUser(state, value) {
             state.user = value
         }
     },

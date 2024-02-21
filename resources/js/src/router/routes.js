@@ -1,21 +1,22 @@
-import AuthLayout from "@/layouts/AuthLayout.vue";
 import PublicLayout from "@/layouts/PublicLayout.vue";
 import CreatedTestLayout from "@/layouts/CreatedTestLayout.vue";
 
-import Home from "@/views/Home.vue";
-import Profile from "@/views/Profile.vue";
-import Test from "@/views/Test.vue";
-import PreviewTest from "@/components/PreviewTest.vue";
-import PassTest from "@/components/PassTest.vue";
+import LoginView from "@/views/Auth/LoginView.vue";
+
+import HomeView from "@/views/HomeView.vue";
+import ProfileView from "@/views/ProfileView.vue";
+import TestView from "@/views/TestView.vue";
 
 import CreatedTestView from "@/views/Test/IndexView.vue";
 import CreateTestView from "@/views/Test/CreateView.vue";
 import EditTestView from "@/views/Test/EditView.vue";
+import TestPreviewView from "@/views/Test/PreviewView.vue";
+import TestPassView from "@/views/Test/PassView.vue";
 
 const routes = [
     {
         path: '/login',
-        component: AuthLayout,
+        component: LoginView,
         name: 'login',
         meta: {breadcrumb: 'Авторизация', middleware: 'guest'},
     },
@@ -26,27 +27,27 @@ const routes = [
         children: [
             {
                 path: '',
-                component: Home,
+                component: HomeView,
                 name: 'home',
                 meta: {breadcrumb: 'Главная'},
             },
             {
                 path: '/tests/:id',
-                redirect: {name: 'preview'},
-                component: Test,
-                name: 'test',
+                redirect: {name: 'preview-test'},
+                component: TestView,
+                name: 'tests',
                 meta: {breadcrumb: 'Тест'},
                 children: [
                     {
                         path: '',
-                        component: PreviewTest,
-                        name: 'preview',
+                        component: TestPreviewView,
+                        name: 'preview-test',
                         meta: {breadcrumb: 'Просмотр'},
                     },
                     {
                         path: 'pass',
-                        component: PassTest,
-                        name: 'pass',
+                        component: TestPassView,
+                        name: 'pass-test',
                         meta: {breadcrumb: 'Выполнение'},
                     }
                 ]
@@ -77,8 +78,14 @@ const routes = [
             },
             {
                 path: '/profile',
-                component: Profile,
+                component: ProfileView,
                 name: 'profile',
+                meta: {breadcrumb: 'Личный кабинет'},
+            },
+            {
+                path: '/authors/:id',
+                component: ProfileView,
+                name: 'authors',
                 meta: {breadcrumb: 'Личный кабинет'},
             }
         ],

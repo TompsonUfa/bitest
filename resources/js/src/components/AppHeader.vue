@@ -6,13 +6,10 @@
                     <router-link class="navbar__brand navbar-brand" to="/">bitest</router-link>
                     <ul class="navbar__nav navbar-nav">
                         <li class="nav-item">
-                            <router-link to="/" class="nav-link">Главная</router-link>
+                            <router-link :to="{name: 'home'}" class="nav-link">Главная</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/passed-tests" class="nav-link">Пройденные тесты</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/created-tests" class="nav-link">Мои тесты</router-link>
+                            <router-link :to="{name: 'created-tests'}" class="nav-link">Мои тесты</router-link>
                         </li>
                     </ul>
                 </div>

@@ -2,8 +2,9 @@
     <div class="questions">
         <div v-for="(question, index) in questions" :key="question.id"
              @click="$emit('select-question', question)"
-             class="questions__item" :class="{'questions__item_active': selectedQuestion === question,
-             'questions__item_answered': hasAnswer(question)}">
+             class="questions__item"
+             :class="{'questions__item_active': selectedQuestion === question, 'questions__item_answered': hasAnswer(question.id)
+             }">
           {{index + 1}}
         </div>
     </div>
@@ -16,25 +17,22 @@ import {mapGetters} from "vuex";
         props: {
             questions: {
                 type: Array,
-                required: false,
+                required: true,
             },
             selectedQuestion: {
                 type: Object,
                 required: false,
             },
-            answers: {
-                type: Array,
+            testId: {
                 required: false,
-            },
+            }
         },
         computed: {
-          ...mapGetters(['getAnswersById'])
+          ...mapGetters(['getAnswersByQuestionId'])
         },
         methods: {
-            hasAnswer(question){
-                if (this.answers){
-                    return !!this.getAnswersById(question.id);
-                }
+            hasAnswer(questionId){
+                return !!this.getAnswersByQuestionId([this.testId, questionId])
             }
         },
         emits: ["select-question"],

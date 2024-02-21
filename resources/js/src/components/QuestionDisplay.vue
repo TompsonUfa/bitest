@@ -6,13 +6,20 @@
             </div>
         </div>
         <div class="row">
-            <div :class="selectedQuestion.img ? 'col-6' : 'col-12'">
-                <p class="question__desc">{{!selectedQuestion.open ? 'Варианты ответов:' : 'Введите ваш ответ:'}}</p>
-                <question-options class="question__options"></question-options>
+            <div :class="selectedQuestion?.img ? 'col-6' : 'col-12'">
+                <p class="question__desc">
+                    {{ !Boolean(selectedQuestion.open) ? 'Варианты ответов:' : 'Введите ваш ответ:' }}
+                </p>
+                <question-options v-if="this.selectedQuestion"
+                                  :testId="this.testId"
+                                  :selectedQuestion="this.selectedQuestion"
+                                  class="question__options">
+
+                </question-options>
             </div>
-            <div class="col-6" v-if="selectedQuestion.img">
+            <div class="col-6" v-if="selectedQuestion?.image">
                 <div class="question__wrap-img">
-                    <img class="question__img" :src="selectedQuestion.img" :alt="selectedQuestion.name">
+                    <img class="question__img" :src="selectedQuestion.image" :alt="selectedQuestion.name">
                 </div>
             </div>
         </div>
@@ -20,21 +27,27 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-    import QuestionOptions from "@/components/QuestionOptions.vue";
-    export default {
-        name: 'QuestionDisplay',
-        components: {
-            QuestionOptions,
+import QuestionOptions from "@/components/QuestionOptions.vue";
+
+export default {
+    name: 'QuestionDisplay',
+    components: {
+        QuestionOptions,
+    },
+    props: {
+        testId: {
+            required: true,
         },
-        computed: {
-           ...mapGetters(['selectedQuestion'])
-        },
+        selectedQuestion: {
+            type: Object,
+            required: true,
+        }
     }
+}
 </script>
 
 <style scoped lang="scss">
-.question{
+.question {
     &__title, &__options, &__desc {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -43,27 +56,31 @@ import {mapActions, mapGetters} from "vuex";
         -ms-user-select: none;
         user-select: none;
     }
+
     &__title {
         line-height: 1.2;
 
     }
-    &__desc{
+
+    &__desc {
         color: var(--main-color);
         margin-bottom: 10px;
     }
-    &__wrap-img{
+
+    &__wrap-img {
         width: 100%;
         height: 100%;
         overflow: hidden;
         border-radius: 15px;
     }
-    &__img{
+
+    &__img {
         width: inherit;
         height: inherit;
         object-fit: cover;
         transition: all 0.3s ease;
 
-        &:hover{
+        &:hover {
             transform: scale(1.2);
         }
     }

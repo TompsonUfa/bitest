@@ -108,7 +108,8 @@ export default {
             this.form.timeComplete.selected = this.form.timeComplete.options.find(item => item.value === testInfo.time_complete);
             this.form.attempts.selected = this.form.attempts.options.find(item => item.value === testInfo.attempts);
             this.form.limitQuestions.selected = this.form.limitQuestions.options.find(item => item.value === testInfo.limit_questions);
-            this.form.published = testInfo.published;
+            this.form.published = Boolean(testInfo.published);
+
         }
 
         this.dataLoaded = true;

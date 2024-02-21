@@ -19,7 +19,7 @@ class TestResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'image' => $this->image,
-            'author_id ' => $this->author_id,
+            'author' => $this->author,
             'time_complete' => $this->time_complete,
             'attempts' => $this->attempts,
             'limit_questions' => $this->limit_questions,

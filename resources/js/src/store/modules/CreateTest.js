@@ -26,7 +26,7 @@ export default {
                 missingFields.push("Необходимо выбрать картинку для теста");
             }
 
-            if (data[1] === 'create' && !data[0].questions ||data[1] === 'create' && data[0].questions.length === 0) {
+            if (data[1] === 'create' && !data[0].questions || data[1] === 'create' && data[0].questions.length === 0) {
                 missingFields.push("Заполните вопросы для теста");
             }
 
@@ -68,10 +68,11 @@ export default {
                                 ctx.commit("setMissingFields", null);
                                 ctx.commit("clearStateTest", info.id);
                                 router.push({name: 'created-tests'});
-                                console.log( ctx.getters.cachedTest)
-                            }).catch((err) => {
-                            console.log(err)
-                        })
+                                console.log(ctx.getters.cachedTest)
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
                     }
                 });
         },
@@ -102,7 +103,7 @@ export default {
                                 ctx.commit("setMissingFields", null);
                                 ctx.commit("clearStateTest", testId);
                                 router.push({name: 'created-tests'});
-                                console.log( ctx.getters.cachedTest)
+                                console.log(ctx.getters.cachedTest)
                             }).catch((err) => {
                             console.log(err)
                         })
@@ -162,7 +163,7 @@ export default {
             }
             state.missingFields = [];
         },
-        clearAllTest(state){
+        clearAllTest(state) {
             state.test = [];
         }
     },

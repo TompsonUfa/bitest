@@ -8,7 +8,8 @@
             </form>
         </div>
         <div class="col-12 mb-3">
-            <table-tests @delete-test="testId => deleteTest(testId)" v-if="this.tests.length > 0" :tests="this.tests"></table-tests>
+            <table-tests @delete-test="testId => deleteTest(testId)" v-if="this.tests.length > 0"
+                         :tests="this.tests"></table-tests>
         </div>
         <div class="row mb-3">
             <div class="col-12">
@@ -63,15 +64,16 @@ export default {
     computed: {
         ...mapGetters(['user']),
     },
+
+    mounted() {
+        this.getData();
+    },
     data() {
         return {
             tests: [],
             search: '',
             pagination: [],
         }
-    },
-    mounted() {
-        this.getData();
     },
     methods: {
         ...mapActions(['clearStateTest']),
@@ -91,7 +93,7 @@ export default {
                     console.log(err)
                 })
         },
-        deleteTest(testId){
+        deleteTest(testId) {
             axios.delete(`/api/moder/tests/${testId}`)
                 .then(res => {
                     this.clearStateTest(testId);

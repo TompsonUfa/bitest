@@ -67,7 +67,6 @@
          ...mapActions(['updateAccesses']),
          selectedAccessFor(item){
              this.accessFor.selected = item;
-             // selectedItems = делаем подгрузку студентов или групп
          },
          addAccess(){
              const access = {

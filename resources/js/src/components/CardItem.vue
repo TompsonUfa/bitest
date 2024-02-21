@@ -1,20 +1,22 @@
 <template>
     <article class="card">
         <div class="card__wrap-picture">
-            <img class="card__picture" src="/storage/images/1.jpeg" alt="">
+            <img class="card__picture" :src="this.test.image" :alt="this.test.title">
         </div>
         <div class="card__content">
-            <a href="/categories" class="card__category">Категория</a>
-            <h3 class="card__title">{{ test.title }}</h3>
+            <router-link :to="''" class="card__category">
+                Категория
+            </router-link>
+            <h3 class="card__title">{{ this.test.title }}</h3>
             <div class="card__meta">
                 <span class="card__author">
-                    <router-link :to="'/authors/' + test.author_id" class="card__author_link">
-                        {{ test.first_name + " " + test.last_name }}
+                    <router-link :to="{name: 'authors', params: {id: this.test.author.id}}" class="card__author_link">
+                        {{ this.test.author.last_name + " " + this.test.author.first_name }}
                     </router-link>
                 </span> -
                 <span class="card__date"> {{ formatDate(test.created_at) }}</span>
             </div>
-            <router-link class="btn card__btn" :to="'/tests/' + test.id ">Перейти</router-link>
+            <router-link class="btn card__btn" :to="{name: 'tests', params: {id: this.test.id}}">Перейти</router-link>
         </div>
     </article>
 </template>

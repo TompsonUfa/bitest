@@ -10,7 +10,10 @@
             </tr>
             </thead>
             <tbody>
-                <TableTestsItem @delete-test="testId => this.$emit('delete-test', testId)" :test="test" v-for="(test, index) in tests" :key="index"></TableTestsItem>
+                <TableTestsItem @delete-test="testId => this.$emit('delete-test', testId)"
+                                :test="test"
+                                v-for="(test, index) in tests" :key="index">
+                </TableTestsItem>
 <!--                <ui-button @click="this.clearAllTest()">Очистить кэш</ui-button>-->
 
 
@@ -28,7 +31,6 @@
 <script>
 import TableTestsItem from "@/components/TableTestsItem.vue";
 import UiButton from "./UI/UiButton.vue";
-import {mapActions} from "vuex";
 export default {
     name: "TableTests",
     props: {
@@ -40,9 +42,6 @@ export default {
     components: {
         UiButton,
         TableTestsItem
-    },
-    methods: {
-        ...mapActions(['clearAllTest'])
     },
     emits: ['delete-test'],
 }

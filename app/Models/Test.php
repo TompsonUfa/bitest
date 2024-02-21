@@ -24,9 +24,9 @@ class Test extends Model
         'updated_at',
     ];
 
-    public function user(): HasOne
+    public function author(): HasOne
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id', 'author_id');
     }
 
     public function questions(): HasMany

@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\DB;
 
 class TestService
 {
+    public function getListTests($search, $pagination, $page, $perPage = 10)
+    {
+        $tests = Test::where('published', 1);
+
+        if (!empty($search)) {
+            $tests->where('title', 'like', $search . '%');
+        }
+
+        if ($pagination) {
+            return $tests->paginate($perPage, ['*'], 'page', $page);
+        }
+
+        return $tests->get();
+    }
     public function getTestsAuthor($authorId, $search, $pagination, $page, $perPage = 10)
     {
 
