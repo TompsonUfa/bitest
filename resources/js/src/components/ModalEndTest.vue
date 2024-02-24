@@ -8,24 +8,26 @@
                 </div>
             </div>
             <div class="modal__content">
-                <div class="modal__info">
-                    <p class="modal__desc">
-                        Вы уверены, что хотите завершить тест?
-                    </p>
-                    <template v-if="list.length > 0">
+
+                    <div class="modal__info">
                         <p class="modal__desc">
-                            Вы не ответили на вопросы:
+                            Вы уверены, что хотите завершить тест?
                         </p>
-                        <ul class="modal__list">
-                            <li v-for="item in list" :key="item.idx">
-                                {{ item.idx + ") " + item.question.name }}
-                            </li>
-                        </ul>
-                    </template>
-                </div>
+                        <template v-if="list.length > 0">
+                            <p class="modal__desc">
+                                Вы не ответили на вопросы:
+                            </p>
+                            <ul class="modal__list">
+                                <li v-for="item in list" :key="item.idx">
+                                    {{ item.idx + ") " + item.question.name }}
+                                </li>
+                            </ul>
+                        </template>
+                    </div>
+
             </div>
             <div class="modal__footer">
-                <ui-button>Завершить</ui-button>
+                <ui-button @click="this.$emit('post-test')">Завершить</ui-button>
             </div>
         </div>
     </div>
@@ -80,7 +82,7 @@ export default {
             return unanswered;
         }
     },
-    emits: ['close-modal'],
+    emits: ['close-modal', 'post-test'],
     mounted() {
         this.list = this.unanswered();
     },

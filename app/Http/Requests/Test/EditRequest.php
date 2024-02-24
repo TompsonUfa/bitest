@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Test;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TestCreateRequest extends FormRequest
+class EditRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -18,9 +18,8 @@ class TestCreateRequest extends FormRequest
             'info.time' => 'nullable|integer',
             'info.attempts' => 'nullable|integer',
             'info.limitQuestions' => 'nullable|integer',
-            'info.userId' => 'required|integer',
             'info.image' => 'required|string',
-            'questions' => 'required|array',
+            'questions' => 'array',
         ];
     }
 }

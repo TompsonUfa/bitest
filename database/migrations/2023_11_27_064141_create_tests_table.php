@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->integer('limit_questions')->nullable();
             $table->boolean('published')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

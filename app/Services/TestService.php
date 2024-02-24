@@ -2,16 +2,20 @@
 
 namespace App\Services;
 
+use App\Http\Resources\QuestionResource;
 use App\Models\Access;
 use App\Models\Option;
+use App\Models\QuestionType;
 use App\Models\Test;
 use App\Models\Question;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Ramsey\Collection\Collection;
 
 class TestService
 {
-    public function getListTests($search, $pagination, $page, $perPage = 10)
+    public function getListTests(string $search, bool $pagination, int $page, int $perPage = 10): LengthAwarePaginator|Collection
     {
         $tests = Test::where('published', 1);
 
@@ -25,7 +29,8 @@ class TestService
 
         return $tests->get();
     }
-    public function getTestsAuthor($authorId, $search, $pagination, $page, $perPage = 10)
+
+    public function getTestsAuthor(int $authorId, string $search, bool $pagination, int $page, int $perPage = 10): LengthAwarePaginator|Collection
     {
 
         $tests = Test::where('author_id', $authorId);
@@ -42,7 +47,7 @@ class TestService
 
     }
 
-    public function createTest($info, $questions, $accesses): JsonResponse
+    public function createTest(object $info, $questions): bool
     {
         try {
             DB::beginTransaction();
@@ -57,48 +62,40 @@ class TestService
             $test->image = $info['image'];
             $test->save();
 
-            foreach ($questions as $question) {
-                $questionDb = new Question;
-                $questionDb->name = $question['name'];
-                $questionDb->open = boolval($question['open']);
-                $questionDb->test_id = $test->id;
-                $questionDb->save();
 
-                if (!boolval($question['open'])) {
-                    $options = $question['options'];
+            foreach ($questions as $questionData) {
+                $questionType = QuestionType::where('value', $questionData['type'])->first();
+
+                $question = $test->questions()->create([
+                    'name' => $questionData['name'],
+                    'question_type_id' => $questionType->id,
+                ]);
+
+                if ($questionData['type'] !== 0) {
+                    $options = $questionData['options'];
                     foreach ($options as $option) {
-                        $optionDb = new Option;
-                        $optionDb->name = $option['name'];
-                        $optionDb->correct = $option['correct'];
-                        $optionDb->question_id = $questionDb->id;
-                        $optionDb->save();
+                        $question->options()->create([
+                            'name' => $option['name'],
+                            'correct' => $option['correct'],
+                        ]);
                     }
-                }
-
-            }
-
-            if (!empty($accesses)) {
-                foreach ($accesses as $access) {
-                    $accessDb = new Access;
-                    $accessDb->test_id = $test->id;
-                    $accessDb->user_id = $access['type'] === 'users' ? $access['id'] : null;
-                    $accessDb->group_id = $access['type'] === 'groups' ? $access['id'] : null;
-                    $accessDb->save();
                 }
             }
 
             DB::commit();
 
-            return response()->json(['success' => true, 'message' => "test created"], 201);
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error($e->getMessage());
+
+            return false;
         }
 
     }
 
-    public function editTest($test, $info, $questions)
+    public function editTest(Test $test, array $info, array $questions): bool
     {
         try {
             DB::beginTransaction();
@@ -122,10 +119,11 @@ class TestService
                     } else {
                         foreach ($questions as $question) {
                             if ($question['id'] == $questionDb->id) {
+                                $questionType = QuestionType::where('value', $question['type'])->first();
                                 $questionDb->name = $question['name'];
-                                $questionDb->open = $question['open'];
+                                $questionDb->question_type_id = $questionType->id;
                                 $questionDb->save();
-                                if (!boolval($question['open'])) {
+                                if ($question['type'] > 0) {
                                     $options = $question['options'];
                                     $optionsIds = array_column($options, 'id');
                                     $optionsDb = $questionDb->options;
@@ -152,9 +150,10 @@ class TestService
                 foreach ($questions as $question) {
                     $existingQuestion = $questionsDb->firstWhere('id', $question['id']);
                     if (!$existingQuestion) {
+                        $questionType = QuestionType::where('value', $question['type'])->first();
                         $newQuestion = new Question();
                         $newQuestion->name = $question['name'];
-                        $newQuestion->open = $question['open'];
+                        $newQuestion->question_type_id = $questionType->id;
                         $newQuestion->test_id = $test->id;
                         $newQuestion->save();
                         $newQuestion->fresh();
@@ -173,12 +172,18 @@ class TestService
 
             DB::commit();
 
-            return response()->json(['success' => true, 'message' => "test updated"], 200);
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error($e->getMessage());
 
-            return response()->json(['error' => $e->getMessage()], 500);
+            return false;
         }
+    }
+
+    public function createPassTest(int $test, array $answers)
+    {
+
     }
 
 }

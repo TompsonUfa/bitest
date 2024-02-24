@@ -8,13 +8,12 @@
         <div class="row">
             <div :class="selectedQuestion?.img ? 'col-6' : 'col-12'">
                 <p class="question__desc">
-                    {{ !Boolean(selectedQuestion.open) ? 'Варианты ответов:' : 'Введите ваш ответ:' }}
+                    {{ selectedQuestion.type > 0 ? 'Варианты ответов:' : 'Введите ваш ответ:' }}
                 </p>
                 <question-options v-if="this.selectedQuestion"
                                   :testId="this.testId"
                                   :selectedQuestion="this.selectedQuestion"
                                   class="question__options">
-
                 </question-options>
             </div>
             <div class="col-6" v-if="selectedQuestion?.image">
@@ -42,6 +41,9 @@ export default {
             type: Object,
             required: true,
         }
+    },
+    mounted() {
+        console.log(this.selectedQuestion)
     }
 }
 </script>

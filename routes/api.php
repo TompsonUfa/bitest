@@ -13,9 +13,4 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::post('/upload-image', [ImageController::class, 'store']);
 
-    Route::get('tests', [TestController::class, 'index'])->name('tests.name');
-
-    Route::get('tests/{test}', [TestController::class, 'show'])->name('tests.show');
-
-    Route::get('tests/{test}/pass', [TestController::class, 'testPass'])->name('tests.pass');
 });

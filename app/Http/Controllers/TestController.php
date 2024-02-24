@@ -7,12 +7,13 @@ use App\Http\Resources\TestResource;
 use App\Models\Test;
 use App\Services\TestService;
 use Illuminate\Http\Request;
+use App\Http\Requests\Test\CreatePassRequest;
 
 class TestController extends Controller
 {
     public function index(Request $request, TestService $service)
     {
-        $search = $request->input('search');
+        $search = $request->input('search') ?? '';
         $page = $request->input('page');
         $perPage = $request->input('per_page');
 
@@ -29,5 +30,13 @@ class TestController extends Controller
     public function testPass(Test $test)
     {
         return new TestPassResource($test);
+    }
+
+    public function storeTestPass(Test $test, CreatePassRequest $request, TestService $service)
+    {
+        $answers = $request->input('answers');
+
+        $created = $service->createPassTest($test, $answers);
+
     }
 }

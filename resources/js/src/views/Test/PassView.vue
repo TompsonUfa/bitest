@@ -30,11 +30,12 @@
         </div>
         <modal-end-test :testId="this.test?.id"
                         :questions="this.test.questions"
+                        @post-test="this.postTest"
                         @close-modal="this.modalShow = !this.modalShow"
                         v-if="this.modalShow">
         </modal-end-test>
     </div>
-    <ui-button @click="this.clearCache" class="mt-5">Очистить кэш</ui-button>
+<!--    <ui-button @click="this.clearCache" class="mt-5">Очистить кэш</ui-button>-->
 </template>
 
 <script>
@@ -56,7 +57,7 @@ export default {
         ModalEndTest
     },
     computed: {
-        ...mapGetters(['getAnswersByQuestionId', 'getUserTestResponse']),
+        ...mapGetters(['getAnswersByQuestionId', 'getUserAnswersByTestId']),
     },
     data() {
         return {
@@ -124,6 +125,20 @@ export default {
                 })
                 .catch(err => {
                     console.log(err)
+                })
+        },
+        postTest() {
+            const userAnswers = this.getUserAnswersByTestId(this.test.id);
+
+            axios.post(`/api/tests/${this.test.id}/pass`, {'answers' : userAnswers})
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+                .finally(res => {
+
                 })
         }
     },

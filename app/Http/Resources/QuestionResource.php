@@ -17,7 +17,7 @@ class QuestionResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'open' => $this->open,
+            'type' => $this->type->value,
             'options' => OptionResource::collection($this->options),
         ];
     }

@@ -27,6 +27,7 @@ export default {
             axios.get(`/api/moder/tests/${testId}`)
                 .then(res => {
                     this.test = res.data.data;
+                    console.log(this.test)
                 })
                 .catch(err => {
                     console.log(err)

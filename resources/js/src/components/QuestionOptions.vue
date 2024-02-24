@@ -1,26 +1,28 @@
 <template>
     <div class="options">
-        <div v-if="!Boolean(this.selectedQuestion.open)"
+        <div v-if="this.selectedQuestion.type === 0" class="options__item">
+            <input type="text" class="form-control options__input" v-model="this.userAnswer.openAnswer">
+        </div>
+        <div v-else
              v-for="option in this.selectedQuestion.options"
              :key="option.id" class="options__item">
             <div class="form-check">
-                <input v-if="this.selectedQuestion"
+                <input v-if="this.selectedQuestion.type === 1"
+                       name="option" type="radio"
+                       :value="option.id" class="form-check-input options__check-input"
+                       :id="'option-' + option.id"
+                       @change="addToSelectedAnswers(option.id)"
+                >
+                <input v-if="this.selectedQuestion.type === 2"
                        name="option" type="checkbox"
                        :value="option.id" class="form-check-input options__check-input"
                        :id="'option-' + option.id"
                        v-model="this.userAnswer.selectedAnswers"
                 >
-                <!--                <input v-if="!this.selectedQuestion.several"-->
-                <!--                       name="option" type="radio"-->
-                <!--                       :value="option.id" class="form-check-input options__check-input"-->
-                <!--                       :id="'option-' + option.id">-->
                 <label class="form-check-label" :for="'option-' + option.id">
                     {{ option.name }}
                 </label>
             </div>
-        </div>
-        <div v-if="this.selectedQuestion.open" class="options__item">
-            <input type="text" class="form-control options__input" v-model="this.userAnswer.openAnswer">
         </div>
     </div>
 </template>
@@ -81,6 +83,9 @@ export default {
     },
     methods: {
         ...mapActions(['updateUserAnswer']),
+        addToSelectedAnswers(optionId){
+            this.userAnswer.selectedAnswers = [optionId];
+        }
     },
 }
 </script>

@@ -52,13 +52,17 @@ export default {
         getAnswersByQuestionId: (state) => ([testId, questionId]) => {
             const testIndex = state.tests.findIndex(item => item.id === testId);
 
-            if (testIndex >= 0)
-            {
+            if (testIndex >= 0) {
                 return state.tests[testIndex].questions.find(question => question.id === questionId)
             }
         },
         getUserTestResponse(state) {
             return state.tests;
+        },
+        getUserAnswersByTestId: (state) => (testId) => {
+            const foundTest = state.tests.find(item => item.id === testId);
+
+            return foundTest.questions
         }
     }
 }

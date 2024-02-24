@@ -17,10 +17,9 @@ return new class extends Migration {
             $table->string('password');
             $table->string('avatar')->nullable();
             $table->string('group')->nullable();
-            $table->boolean('moderator')->default(0);
-            $table->boolean('admin')->default(0);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

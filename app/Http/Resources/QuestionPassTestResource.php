@@ -17,7 +17,7 @@ class QuestionPassTestResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'open' => $this->open,
+            'type' => $this->type->value,
             'options' => OptionPassTestResource::collection($this->options)
         ];
     }
