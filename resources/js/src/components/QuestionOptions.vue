@@ -12,6 +12,7 @@
                        :value="option.id" class="form-check-input options__check-input"
                        :id="'option-' + option.id"
                        @change="addToSelectedAnswers(option.id)"
+                       :checked="this.userAnswer.selectedAnswers.find(answer => answer === option.id)"
                 >
                 <input v-if="this.selectedQuestion.type === 2"
                        name="option" type="checkbox"
